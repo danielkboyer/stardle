@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         >
           Powered by{' '}
           <span className={styles.logo}>
-            Thomas' farts
+            Thomas&apos; farts
           </span>
         </a>
       </footer>
