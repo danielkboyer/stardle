@@ -4,6 +4,9 @@
   margin: 3rem auto 6rem;
 }
 
+.main{
+  background-color: orange;
+}
 .header {
   display: flex;
   flex-direction: column;
