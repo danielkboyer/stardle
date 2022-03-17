@@ -16,7 +16,7 @@ const Home: NextPage = () => {
 
 
         <div className={styles.image}>
-        <Image src='/images/thomas_boyer.jpg' alt="Mystery Star" width={400} height={512} />
+        <Image src="/images/thomas_boyer.jpg" alt="Mystery Star" width={400} height={512} />
         </div>
         <div className={styles.input}>
           <input></input>
