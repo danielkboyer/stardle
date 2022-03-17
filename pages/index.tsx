@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout'
+import StarPic from '../public/images/thomas_boyer.jpg'
 const Home: NextPage = () => {
   return (
     <Layout>
@@ -16,7 +17,7 @@ const Home: NextPage = () => {
 
 
         <div className={styles.image}>
-        <Image src="/images/thomas_boyer.jpg" alt="Mystery Star" width={400} height={512} />
+        <Image src={StarPic} alt="Mystery Star" width={400} height={512} />
         </div>
         <div className={styles.input}>
           <input></input>
