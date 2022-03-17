@@ -3,20 +3,41 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout'
-const Home: NextPage = () => {
+import { GetStaticProps } from 'next'
+import {getImageData} from '../lib/stars'
+export default function Home({
+        starPath,
+        pixel1,
+        pixel2,
+        pixel3,
+        pixel4,
+        pixel5,
+        name
+}:{
+        starPath:string,
+        pixel1:string,
+        pixel2:string,
+        pixel3:string,
+        pixel4:string,
+        pixel5:string,
+        name:string
+  
+}){
   return (
+    
     <Layout>
     <div className={styles.container}>
 
       <main className={styles.main}>
 
         <h1 className={styles.title}>
-          Stardle! 
+          Stardle!
         </h1>
 
 
-        <div className={styles.image}>
-        <Image src="/images/thomas_boyer.jpg" alt="Mystery Star" width={400} height={512} />
+        <div className={styles.overlapGrid}>
+        <Image src={starPath} alt="Mystery Star" width={400} height={512} />
+        <Image src={pixel1} alt="Image Overlay" width={400} height={512} />
         </div>
         <div className={styles.input}>
           <input></input>
@@ -39,5 +60,15 @@ const Home: NextPage = () => {
     </Layout>
   )
 }
+export const getStaticProps: GetStaticProps = async () => {
+  
+  const imageData = getImageData();
+  return {
+    props: 
 
-export default Home
+      imageData
+    
+      
+    
+  }
+}
