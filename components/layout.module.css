@@ -1,7 +1,5 @@
 .container {
   max-width: 36rem;
-  padding: 0 1rem;
-  margin: 3rem auto 6rem;
 }
 
 .header {
@@ -9,7 +7,30 @@
   flex-direction: column;
   align-items: center;
 }
+.topnav {
+  padding: .5rem;
+  overflow: hidden;
+  border-bottom: 1px solid black;
+}
 
+.topnav a.right{
+  float: right;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  
+}
+
+.title {
+  color: var(--stardle_blue);
+  margin: 0;
+  line-height: 1.15;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.topnav a:hover{
+  background-color: blue;
+  color: white;
+}
 .backToHome {
   margin: 3rem 0 0;
 }
