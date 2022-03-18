@@ -1,10 +1,11 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout'
 import { GetStaticProps } from 'next'
 import {getImageData} from '../lib/stars'
+import Share from '../components/share'
+//import cookieCutter from 'cookie-cutter'
 export default function Home({
         starPath,
         pixel1,
@@ -38,8 +39,15 @@ export default function Home({
         </div>
         <div className={styles.input}>
           <label>Whos The Star?</label>
+          
           <input placeholder='Type Celebrities Name Here'></input>
           <button>SUBMIT</button>
+          <button>SKIP</button>
+          <Share
+          label="Share"
+          title="Test"
+          text="test"/>
+          
         </div>
 
         <div className={styles.guess}>
