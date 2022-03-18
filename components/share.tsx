@@ -1,7 +1,7 @@
 import exp from "constants";
 import React from 'react'
 import {useRouter} from 'next/router'
-function share({ label, text, title }:
+function Share({ label, text, title }:
     {
         label:string,
         text:string,
@@ -35,4 +35,4 @@ function share({ label, text, title }:
     )
   }
 
-  export default share;
+  export default Share;
