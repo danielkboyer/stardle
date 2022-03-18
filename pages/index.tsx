@@ -30,9 +30,6 @@ export default function Home({
 
       <main className={styles.main}>
 
-        <h1 className={styles.title}>
-          Stardle!
-        </h1>
 
 
         <div className={styles.overlapGrid}>
@@ -40,8 +37,30 @@ export default function Home({
         <Image src={pixel1} alt="Image Overlay" width={400} height={512} />
         </div>
         <div className={styles.input}>
-          <input></input>
+          <label>Whos The Star?</label>
+          <input placeholder='Type Celebrities Name Here'></input>
+          <button>SUBMIT</button>
         </div>
+
+        <div className={styles.guess}>
+          <span>Tommy Boyer</span>
+        </div>
+        <div className={styles.guess}>
+          <span>Tommy Boyer</span>
+        </div>
+        <div className={styles.guess}>
+          <span>Tommy Boyer</span>
+        </div>
+        <div className={styles.guess}>
+          <span>Tommy Boyer</span>
+        </div>
+        <div className={styles.guess}>
+          <span>Tommy Boyer</span>
+        </div>
+        <div className={styles.guess}>
+          <span>Tommy Boyer</span>
+        </div>
+        
       </main>
 
       <footer className={styles.footer}>
@@ -52,7 +71,7 @@ export default function Home({
         >
           Powered by{' '}
           <span className={styles.logo}>
-            Thomas&apos; farts
+            dans muscles
           </span>
         </a>
       </footer>
