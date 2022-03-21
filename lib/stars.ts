@@ -2,6 +2,8 @@ import fs from 'fs'
 import path from 'path'
 const dayDirectory = path.join(process.cwd(),'public')
 
+
+
 export function getImageData(){
     const dateObj = new Date();
     const month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -14,7 +16,7 @@ export function getImageData(){
     const pixel3 = dayPath+"3.png";
     const pixel4 = dayPath+"4.png";
     const pixel5 = dayPath+"5.png";
-
+    const pixel6 = dayPath+"6.png";
     const fullPath = path.join(dayDirectory,dayPath+"name.txt");
     const starName = fs.readFileSync(fullPath,'utf-8');
     
@@ -26,6 +28,7 @@ export function getImageData(){
         pixel3:pixel3,
         pixel4:pixel4,
         pixel5:pixel5,
+        pixel6:pixel6,
         name:starName,
       
       

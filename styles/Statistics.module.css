@@ -1,0 +1,33 @@
+.main {
+    background-color: white;
+    align-items: center;
+    text-align: center;
+}
+
+
+.h1{
+    text-align: center;
+}
+
+.container{
+    text-align: center;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+}
+
+.flex1{
+    flex: 1 1 0%;
+}
+
+.semibold{
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+.customline{
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}

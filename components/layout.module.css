@@ -3,6 +3,16 @@
   
 }
 
+.Modal{
+  position: absolute;
+    top: 12rem;
+    left: 2rem;
+    right: 2rem;
+    bottom: 12rem;
+    background-color: white;
+    border-radius: 1rem;
+    border-color: white;
+}
 .header {
   display: flex;
   flex-direction: column;
@@ -14,6 +24,11 @@
   border-bottom: 1px solid black;
 }
 
+.topnav div.right{
+  float: right;
+  margin-left: .5rem;
+  margin-right: .5rem;
+}
 .topnav a.right{
   float: right;
   margin-left: .5rem;
@@ -21,6 +36,21 @@
   
 }
 
+.footer {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
 .title {
   color: var(--stardle_blue);
   margin: 0;

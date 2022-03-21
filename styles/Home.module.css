@@ -47,21 +47,6 @@
   padding: .2rem;
 }
 
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-}
 
 .title a {
   color: #0070f3;
@@ -109,13 +94,19 @@
   max-width: 800px;
 }
 
+.hide {
+  visibility: hidden;
+  display: none;
+}
 .guess {
   padding: 0.1rem;
   padding-left: .4rem;
   margin: .1rem;
   font-size: 1.5rem;
+  line-height: 1.8rem;
   text-align: left;
   min-width: 250px;
+  min-height: 1.8rem;
   background-color: var(--stardle_blue);
   color: red;
 }
