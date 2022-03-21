@@ -9,8 +9,7 @@ import Statistics from '../pages/statistics'
 export const siteTitle = 'Next.js Sample Website'
 import Modal from 'react-modal'
 
-
-
+//440 by 660
 Modal.setAppElement("#__next")
 export default function Layout({ children }:{
     children : React.ReactNode,

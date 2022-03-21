@@ -83,7 +83,7 @@ function Finished({
             <div className={Styles.name}>You Won! You Smart!</div>
         }
         {won == false &&
-            <div className={Styles.name}>You didn`&apos;`t get todays Stardle...I hope you get smarter.</div>
+            <div className={Styles.name}>You didn&apos;t get todays Stardle...I hope you get smarter.</div>
         }
         
         <div className={Styles.dashDiv}>
