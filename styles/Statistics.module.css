@@ -2,6 +2,7 @@
     background-color: white;
     align-items: center;
     text-align: center;
+    border-color: transparent;
 }
 
 
@@ -16,6 +17,7 @@
     justify-content: space-between;
     width: 100%;
     display: flex;
+    border-color: transparent;
 }
 
 .flex1{

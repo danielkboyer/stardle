@@ -66,7 +66,7 @@ export default function Layout({ children }:{
         >
           Powered by{' '}
           <span className={styles.logo}>
-            dans muscles
+            99 Cent Arizona Watermelon Flavor
           </span>
         </a>
       </footer>

@@ -108,7 +108,7 @@
   min-width: 250px;
   min-height: 1.8rem;
   background-color: var(--stardle_blue);
-  color: red;
+  color: #ffecd9;
 }
 .card {
   margin: 1rem;
@@ -140,10 +140,7 @@
   line-height: 1.5;
 }
 
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
+
 
 @media (max-width: 600px) {
   .grid {

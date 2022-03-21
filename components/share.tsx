@@ -1,13 +1,14 @@
 import exp from "constants";
 import React from 'react'
 import {useRouter} from 'next/router'
+import styles from '../components/share.module.css'
 function Share({ label, text, title }:
     {
         label:string,
         text:string,
         title:string
     }) {
-    let url = useRouter().pathname;
+    let url = useRouter().basePath;
     const shareDetails = { url, title, text };
   
     const handleSharing = async () => {
@@ -29,7 +30,7 @@ function Share({ label, text, title }:
       }
     };
     return (
-      <button className="sharer-button" onClick={handleSharing}>
+      <button className={styles.sharerButton} onClick={handleSharing}>
         <span className="sharer-button-text">{label}</span>
       </button>
     )

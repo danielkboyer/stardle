@@ -1,0 +1,16 @@
+.sharerButton{
+    width: 6rem;
+    height: 3rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    border-color: black;
+    background-color: green;
+    color: black;
+    font-weight: bold;
+    letter-spacing: 0.125rem;
+}

@@ -4,6 +4,26 @@ const dayDirectory = path.join(process.cwd(),'public')
 
 
 
+export function getStarData(){
+    const dateObj = new Date();
+    const month = dateObj.getUTCMonth() + 1; //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    const dayPath = "/images/"+year+month+day+"/";
+    const starPath = dayPath+"star.jpg";
+    const fullPath = path.join(dayDirectory,dayPath+"name.txt");
+    const starName = fs.readFileSync(fullPath,'utf-8');
+    
+    return {
+      
+        starPath:starPath,
+     
+        name:starName,
+      
+      
+      
+    }
+}
 export function getImageData(){
     const dateObj = new Date();
     const month = dateObj.getUTCMonth() + 1; //months from 1-12
