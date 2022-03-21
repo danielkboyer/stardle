@@ -358,7 +358,7 @@ export default function Home({
         
         </div>
         <div className={styles.input}>
-          <label>Who's The Star?</label>
+          <label>Who&apos;s The Star?</label>
           
           <input id='celebInput' placeholder='Type Celebrities Name Here'></input>
           <button onClick={() => onGuessSubmit()}>SUBMIT</button>
