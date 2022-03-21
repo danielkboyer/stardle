@@ -24,6 +24,9 @@
   float: right;
   justify-content: center;
   margin: auto;
+  top:50%;
+  height: 24px;
+  margin-top: 1px;
 }
 
 .input {
