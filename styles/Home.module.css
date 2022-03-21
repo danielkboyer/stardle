@@ -18,6 +18,13 @@
   align-items: center;
 }
 
+.divIcon{
+  display: inline;
+  margin-left: 1rem;
+  float: right;
+  justify-content: center;
+  margin: auto;
+}
 
 .input {
   margin-top: 1rem;

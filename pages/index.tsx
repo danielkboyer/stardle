@@ -369,21 +369,51 @@ export default function Home({
 
         <div className={styles.guess}>
           <span>{guess1}</span>
+          { guess1 != "" &&
+            <div className={styles.divIcon}>
+            <Image src="/images/xmark.png" width={24} height={24}></Image>
+            </div>
+          }
         </div>
         <div className={styles.guess}>
           <span>{guess2}</span>
+          { guess2 != "" &&
+            <div className={styles.divIcon}>
+            <Image src="/images/xmark.png" width={24} height={24}></Image>
+            </div>
+          }
         </div>
         <div className={styles.guess}>
           <span>{guess3}</span>
+          { guess3 != "" &&
+            <div className={styles.divIcon}>
+            <Image src="/images/xmark.png" width={24} height={24}></Image>
+            </div>
+          }
         </div>
         <div className={styles.guess}>
           <span>{guess4}</span>
+          { guess4 != "" &&
+            <div className={styles.divIcon}>
+            <Image src="/images/xmark.png" width={24} height={24}></Image>
+            </div>
+          }
         </div>
         <div className={styles.guess}>
           <span>{guess5}</span>
+          { guess5 != "" &&
+            <div className={styles.divIcon}>
+            <Image src="/images/xmark.png" width={24} height={24}></Image>
+            </div>
+          }
         </div>
         <div className={styles.guess}>
           <span>{guess6}</span>
+          { guess6 != "" &&
+            <div className={styles.divIcon}>
+            <Image src="/images/xmark.png" width={24} height={24}></Image>
+            </div>
+          }
         </div>
         
       </main>
