@@ -9,11 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/cookies": "^0.7.7",
+    "@types/react-chartjs-2": "^2.5.7",
+    "@types/react-modal": "^3.13.1",
+    "charts.css": "^0.9.0",
+    "cookies-next": "^2.0.4",
+    "js-cookie": "^3.0.1",
     "next": "12.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-chartjs-2": "^4.0.1",
+    "react-dom": "17.0.2",
+    "react-modal": "^3.14.4"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.35",
+    "@types/js-cookie": "^3.0.1",
     "@types/node": "17.0.21",
     "@types/react": "17.0.40",
     "eslint": "8.11.0",

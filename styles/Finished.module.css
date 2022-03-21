@@ -1,0 +1,40 @@
+
+.dash{
+width: 1rem;
+height: .25rem;
+margin: .125rem;
+}
+
+.gray{
+    background-color: gray;
+}
+.yellow{
+    background-color: yellow;
+}
+
+.green{
+    background-color: green;
+}
+
+.dashDiv{
+    justify-content: center;
+    display: flex;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.name{
+    align-items: center;
+    text-align: center;
+    color: var(--stardle_blue);
+    font-weight: bold;
+}
+.main{
+    overflow: auto;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
