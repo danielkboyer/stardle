@@ -20,7 +20,8 @@ function Finished({
 }){
 
     const router = useRouter();
-    const name = router.query.name as string;
+    const names = router.query.names as string[];
+    console.log(names);
     const starPath = router.query.starPath as string;
     const won = (router.query.won as string) == "true";
     console.log(won)
@@ -78,7 +79,7 @@ function Finished({
     <Layout>
         <div className={Styles.main}>
         <Image src={starPath} width={400} height={512}></Image>
-        <div className={Styles.name}>{name}</div>
+        <div className={Styles.name}>{names[0]}</div>
         {won == true &&
             <div className={Styles.name}>You Won! You Smart!</div>
         }

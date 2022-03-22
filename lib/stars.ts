@@ -26,9 +26,11 @@ export function getStarData(){
 }
 export function getImageData(){
     const dateObj = new Date();
+    dateObj.setHours(dateObj.getHours() - 6);
     const month = dateObj.getUTCMonth() + 1; //months from 1-12
-    const day = dateObj.getUTCDate();
+    var day = dateObj.getUTCDate();
     const year = dateObj.getUTCFullYear();
+  
     const dayPath = "/images/"+year+month+day+"/";
     const starPath = dayPath+"star.jpg";
     const pixel1 = dayPath+"1.png";
@@ -39,6 +41,7 @@ export function getImageData(){
     const pixel6 = dayPath+"6.png";
     const fullPath = path.join(dayDirectory,dayPath+"name.txt");
     const starName = fs.readFileSync(fullPath,'utf-8');
+    const names = starName.split(/\r?\n/);
     
     return {
       
@@ -49,8 +52,7 @@ export function getImageData(){
         pixel4:pixel4,
         pixel5:pixel5,
         pixel6:pixel6,
-        name:starName,
-      
+        names:names,
       
       
     }

@@ -28,7 +28,7 @@ export default function Home({
         pixel4,
         pixel5,
         pixel6,
-        name,
+        names,
 }:{
         starPath:string,
         pixel1:string,
@@ -37,12 +37,13 @@ export default function Home({
         pixel4:string,
         pixel5:string,
         pixel6:string,
-        name:string,
+        names:string[],
   
 }){
   
   const router = useRouter();
   const dateObj = new Date();
+  dateObj.setHours(dateObj.getUTCHours() - 6);
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();
@@ -130,7 +131,7 @@ export default function Home({
         
         query:{
             starPath:starPath,
-            name:name,
+            names:names,
             won:won,
             guessNumber:guessNumber
           
@@ -181,12 +182,12 @@ export default function Home({
       setCookies("winStat",currentWinNumber+1,{maxAge:60*60*24*5840});
     }
 
-    const dateObj = new Date();
-    const month = dateObj.getUTCMonth() + 1; //months from 1-12
-    const day = dateObj.getUTCDate()-1;
-    const year = dateObj.getUTCFullYear();
+    // const dateObj = new Date();
+    // const month = dateObj.getUTCMonth() + 1; //months from 1-12
+    // const day = dateObj.getUTCDate()-1;
+    // const year = dateObj.getUTCFullYear();
 
-    const dateStr = year+''+month+''+day;
+    // const dateStr = year+''+month+''+day;
 
     var solvedYesterday = false;
     var yesterdayCookie = getCookie("won"+dateStr);
@@ -239,7 +240,14 @@ export default function Home({
     if(celebName == "")
       return;
 
-    if(celebName?.toUpperCase() == name){
+    var guessedCorrect = false;
+    for(var x = 0;x<names.length;x++){
+      console.log(names[x]);
+      if(names[x] == celebName.toUpperCase()){
+        guessedCorrect = true;
+      }
+    }
+    if(guessedCorrect){
       console.log("Correct");
       setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
       setCookies("won"+dateStr,true,{maxAge:60*60*24*3});
@@ -319,7 +327,7 @@ export default function Home({
         
         query:{
             starPath:starPath,
-            name:name,
+            names:names,
             won:won,
             guessNumber:onNumber
           
