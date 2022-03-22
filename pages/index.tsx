@@ -427,11 +427,11 @@ export const getStaticProps: GetStaticProps = async () => {
   
   const imageData = getImageData();
   return {
-    props: 
-
-      imageData
+    props:  imageData,
+    revalidate:60
     
       
     
   }
+  
 }
