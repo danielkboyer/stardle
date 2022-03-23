@@ -30,7 +30,7 @@ export function getImageData(){
     const month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     const year = dateObj.getUTCFullYear();
-  
+    const dateStr = year+""+month+""+day;
     const dayPath = "/images/"+year+month+day+"/";
     const starPath = dayPath+"star.jpg";
     const pixel1 = dayPath+"1.jpg";
@@ -53,6 +53,8 @@ export function getImageData(){
         pixel5:pixel5,
         pixel6:pixel6,
         names:names,
+        dateStr:dateStr
+
       
       
     }

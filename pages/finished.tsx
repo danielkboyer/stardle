@@ -20,7 +20,9 @@ function Finished({
 }){
 
     const router = useRouter();
+
     const names = router.query.names as string[] | null;
+   
     console.log(names);
     const starPath = router.query.starPath as string;
     const won = (router.query.won as string) == "true";
@@ -71,8 +73,9 @@ function Finished({
             break;
         default:
             break;
-    }
-    
+        }
+
+
   return (
     
     
@@ -106,7 +109,7 @@ function Finished({
   )
 }
 
-export default withRouter(Finished)
+export default Finished
 
 // export const getStaticProps: GetStaticProps = async () => {
   
