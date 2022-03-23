@@ -354,15 +354,14 @@ export default function Home({
 
 
         <div className={styles.overlapGrid}>
-        <Image src={starPath} alt="Mystery Star" width={400} height={512} >
         
-        </Image>
-        <Image id='pixel1' priority={true} className={pixel1Class} src={pixel1} alt="Image Overlay" width={400} height={512} hidden={true}/>
-        <Image id='pixel2' className={pixel2Class} src={pixel2} alt="Image Overlay" width={400} height={512} hidden={true}/>
-        <Image id='pixel3' className={pixel3Class} src={pixel3} alt="Image Overlay" width={400} height={512} hidden={true}/>
-        <Image id='pixel4' className={pixel4Class} src={pixel4} alt="Image Overlay" width={400} height={512} hidden={true}/>
-        <Image id='pixel5' className={pixel5Class} src={pixel5} alt="Image Overlay" width={400} height={512} hidden={true}/>
-        <Image id='pixel6' className={pixel6Class} src={pixel6} alt="Image Overlay" width={400} height={512} hidden={true}/> 
+        
+        <Image id='pixel1' priority={true} className={pixel1Class} src={pixel1} alt="Star 1" width={400} height={512} hidden={true}/>
+        <Image id='pixel2' className={pixel2Class} src={pixel2} alt="Star 2" width={400} height={512} hidden={true}/>
+        <Image id='pixel3' className={pixel3Class} src={pixel3} alt="Star 3" width={400} height={512} hidden={true}/>
+        <Image id='pixel4' className={pixel4Class} src={pixel4} alt="Star 4" width={400} height={512} hidden={true}/>
+        <Image id='pixel5' className={pixel5Class} src={pixel5} alt="Star 5" width={400} height={512} hidden={true}/>
+        <Image id='pixel6' className={pixel6Class} src={pixel6} alt="Star 6" width={400} height={512} hidden={true}/> 
         
         </div>
         <div className={styles.input}>

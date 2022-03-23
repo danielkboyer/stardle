@@ -33,12 +33,12 @@ export function getImageData(){
   
     const dayPath = "/images/"+year+month+day+"/";
     const starPath = dayPath+"star.jpg";
-    const pixel1 = dayPath+"1.png";
-    const pixel2 = dayPath+"2.png";
-    const pixel3 = dayPath+"3.png";
-    const pixel4 = dayPath+"4.png";
-    const pixel5 = dayPath+"5.png";
-    const pixel6 = dayPath+"6.png";
+    const pixel1 = dayPath+"1.jpg";
+    const pixel2 = dayPath+"2.jpg";
+    const pixel3 = dayPath+"3.jpg";
+    const pixel4 = dayPath+"4.jpg";
+    const pixel5 = dayPath+"5.jpg";
+    const pixel6 = dayPath+"6.jpg";
     const fullPath = path.join(dayDirectory,dayPath+"name.txt");
     const starName = fs.readFileSync(fullPath,'utf-8');
     const names = starName.split(/\r?\n/);
