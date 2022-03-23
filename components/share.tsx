@@ -2,6 +2,7 @@ import exp from "constants";
 import React from 'react'
 import {useRouter} from 'next/router'
 import styles from '../components/share.module.css'
+import * as ga from '../lib/ga/index'
 function Share({ label, text, title }:
     {
         label:string,
@@ -12,6 +13,15 @@ function Share({ label, text, title }:
     const shareDetails = { url, title, text };
   
     const handleSharing = async () => {
+
+      ga.event({
+        action: "share",
+        params : {
+          title:title,
+          text:text, 
+        }
+      })
+
       if (navigator.share) {
         try {
           await navigator

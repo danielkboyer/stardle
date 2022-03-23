@@ -12,7 +12,7 @@ import { bool } from 'prop-types'
 import {getCookie, setCookies} from 'cookies-next'
 import { CookieValueTypes } from 'cookies-next/lib/types'
 import Link from 'next/link'
-
+import * as ga from '../lib/ga/index'
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -49,6 +49,7 @@ export default function Home({
   const[solved,setSolved] = useState(false);
   const[guesses, setGuesses] = useState(["","","","","",""]);
 
+  
   useEffect(()=>{
 
 
@@ -219,20 +220,7 @@ export default function Home({
     }
 
     
-    if(guessedCorrect){
-      console.log("Correct");
-      setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
-      setCookies("won"+dateStr,true,{maxAge:60*60*24*3});
-      setSolved(true);
-      won = true;
-      localSolve = true;
-
-    }
-    else if(guesses[4] != ""){
-      won = false;
-      localSolve = true;
-      setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
-    }
+    
     
     //set the next guess
     for(var x = 0;x<6;x++){
@@ -241,8 +229,48 @@ export default function Home({
         setGuesses(guesses);
         setCookies("guess"+x+dateStr,celebName,{maxAge:60*60*24});
         onNumber = x;
+        ga.event({
+          action: "guess",
+          params : {
+            guessNumber: x,
+            guess:celebName,
+            celebrity:names[0],
+          }
+        })
         break;
       }
+    }
+
+
+    if(guessedCorrect){
+      console.log("Correct");
+      setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
+      setCookies("won"+dateStr,true,{maxAge:60*60*24*3});
+      setSolved(true);
+      won = true;
+      localSolve = true;
+
+      ga.event({
+        action: "won",
+        params : {
+          guessNumber: onNumber,
+          guess:celebName,
+          celebrity:names[0],
+        }
+      })
+
+    }
+    else if(guesses[4] != ""){
+      won = false;
+      localSolve = true;
+      setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
+      ga.event({
+        action: "lost",
+        params : {
+          guess:celebName,
+          celebrity:names[0]
+        }
+      })
     }
 
     //check if they solved the puzzle
