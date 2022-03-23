@@ -20,7 +20,7 @@ function Finished({
 }){
 
     const router = useRouter();
-    const names = router.query.names as string[];
+    const names = router.query.names as string[] | null;
     console.log(names);
     const starPath = router.query.starPath as string;
     const won = (router.query.won as string) == "true";
@@ -79,7 +79,7 @@ function Finished({
     <Layout>
         <div className={Styles.main}>
         <Image src={starPath} width={400} height={512}></Image>
-        <div className={Styles.name}>{names[0]}</div>
+        <div className={Styles.name}>{names != null && names[0]}</div>
         {won == true &&
             <div className={Styles.name}>You Won! You Smart!</div>
         }
@@ -99,7 +99,7 @@ function Finished({
         <Share
           label="SHARE"
           title={shareMessage}
-          text="You should try"
+          text={shareMessage}
           />
         </div>
     </Layout>
