@@ -92,7 +92,7 @@ export default function Home({
       }
       console.log("Guess Number "+guessNumber);
       //redirect the page
-      solvedStardle(won,guessNumber);
+      solvedStardle(won,guessNumber,localGuesses);
       
     }
     
@@ -108,7 +108,7 @@ export default function Home({
   };
 
   //redirects the page to finished
-  const solvedStardle = (won:boolean,guessNumber:number) => {
+  const solvedStardle = (won:boolean,guessNumber:number,localGuesses:string[]) => {
     
     router.replace({
       pathname:'/finished',
@@ -118,7 +118,7 @@ export default function Home({
           names:names,
           won:won,
           stardleNumber:stardleNumber,
-          guesses:guesses,
+          guesses:localGuesses,
           guessNumber: guessNumber
         
       }
@@ -289,7 +289,7 @@ export default function Home({
         onNumber = 7;
       }
       setStats(won,onNumber);
-      solvedStardle(won,onNumber);
+      solvedStardle(won,onNumber,localGuesses);
     }
     
     

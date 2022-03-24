@@ -58,6 +58,8 @@ function Finished({
         }
     }
 
+    console.log(shareMessage);
+
     switch (number){
         case 1:
             div1Style = Styles.green;
