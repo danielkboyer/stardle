@@ -6,22 +6,55 @@ import {useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Statistics from '../pages/statistics'
+import StardleInfo from '../pages/stardleInfo';
 import Modal from 'react-modal'
 import * as ga from '../lib/ga/index'
+import Help from '../pages/help'
 //440 by 660
 Modal.setAppElement("#__next")
 export default function Layout({ children }:{
     children : React.ReactNode,
 }) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [statisticsOpen, setStatisticsOpen] = useState(false);
    // Toggle for Modal
-   const toggle = () => {
+   const toggleStatistics = () => {
      
-    setModalOpen(!modalOpen);
+    setStatisticsOpen(!statisticsOpen);
 
 
     ga.event({
       action: "opened_stats",
+      params : {
+        
+      }
+    })
+   }
+
+   const [stardleInfoOpen, setStardleInfoOpen] = useState(false);
+   // Toggle for Modal
+   const toggleStardleInfo = () => {
+     
+    setStardleInfoOpen(!stardleInfoOpen);
+
+
+    ga.event({
+      action: "opened_stardle_info",
+      params : {
+        
+      }
+    })
+   }
+
+
+   const [helpOpen, setHelpOpen] = useState(false);
+   // Toggle for Modal
+   const toggleHelpOpen = () => {
+     
+    setHelpOpen(!helpOpen);
+
+
+    ga.event({
+      action: "opened_help",
       params : {
         
       }
@@ -34,33 +67,55 @@ export default function Layout({ children }:{
     <div className={styles.container}>
 
       <Head>
-       <title>Stardle - guess famous stars</title>
+        <title>Stardle - Guess famous stars</title>
         <meta name="description" content="Guess famous celebrities! The new Wordle... Stardle!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Modal
-        isOpen={modalOpen}
-        contentLabel="Post modal"
-        onRequestClose={()=>toggle()}
+        isOpen={statisticsOpen}
+        contentLabel="Statistics modal"
+        onRequestClose={()=>toggleStatistics()}
         className={styles.Modal}
         overlayClassName={styles.Overlay}
       >
         <Statistics />
       </Modal>
 
+      <Modal
+        isOpen={stardleInfoOpen}
+        contentLabel="Stardle Info modal"
+        onRequestClose={()=>toggleStardleInfo()}
+        className={styles.ModalStar}
+        overlayClassName={styles.Overlay}
+      >
+        <StardleInfo />
+      </Modal>
+
+      <Modal
+        isOpen={helpOpen}
+        contentLabel="help modal"
+        onRequestClose={()=>toggleHelpOpen()}
+        className={styles.ModalStar}
+        overlayClassName={styles.Overlay}
+      >
+        <Help />
+      </Modal>
+
       <main>
         <div className={styles.topnav}>
-          <a className={styles.title} href='https://stardle.app'>STARDLE</a>
-          <a className={styles.right}>
-            <Image src="/images/question.png" width="24" height="24"/>
-          </a>
-          <a className={styles.right}>
-            <Image src="/images/star.png" width="24" height="24"/>
-          </a>
+          <Link  href='/'>
+            <h1 className={styles.title}>STARDLE</h1>
+          </Link>
+          <div className={styles.right}>
+            <Image onClick={()=>{setHelpOpen(true)}} src="/images/question.png" width="24" height="24"/>
+          </div>
+          <div className={styles.right}>
+            <Image onClick={()=>{setStardleInfoOpen(true)}} src="/images/star.png" width="24" height="24"/>
+          </div>
           <div className={styles.right}>
        
-          <Image onClick={()=>{setModalOpen(true)}} src="/images/stat.png" width="24" height="24"/>
+          <Image onClick={()=>{setStatisticsOpen(true)}} src="/images/stat.png" width="24" height="24"/>
           
           </div>
         </div>
@@ -70,10 +125,9 @@ export default function Layout({ children }:{
         
    
         <footer className={styles.footer}>
-          Powered by{' '}
-          <span className={styles.logo}>
-            99 Cent Arizona Watermelon Flavor
-          </span>
+          <a className={styles.bmcButton} href="https://www.buymeacoffee.com/danielkboyer">
+            <img  src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"/>
+           </a>
       </footer>
     </div>
   )
