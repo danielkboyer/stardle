@@ -10,17 +10,13 @@ import { StringifyOptions } from 'querystring';
 import { CookieValueTypes } from 'cookies-next/lib/types';
 
 export default function Statistics({}){
-  
-const[guess1,setGuess1] = useState(0);
-const[guess2,setGuess2] = useState(0);
-const[guess3,setGuess3] = useState(0);
-const[guess4,setGuess4] = useState(0);
-const[guess5,setGuess5] = useState(0);
-const[guess6,setGuess6] = useState(0);
-const[played,setPlayed] = useState(0);
-const[win,setWin] = useState(0);
-const[currentStreak,setCurrentStreak] = useState(0);
-const[maxStreak,setMaxStreak] = useState(0);
+
+  const[guesses,setGuesses] = useState([0,0,0,0,0,0]);
+
+  const[played,setPlayed] = useState(0);
+  const[win,setWin] = useState(0);
+  const[currentStreak,setCurrentStreak] = useState(0);
+  const[maxStreak,setMaxStreak] = useState(0);
 useEffect(() =>{  
   
   function isString(cookie: CookieValueTypes):cookie is string{
@@ -43,36 +39,14 @@ useEffect(() =>{
   if(isString(maxStreak1)){
     setMaxStreak(Number(maxStreak1));
   }
-
-  var g1 = getCookie("guess1Stat");
-  if(isString(g1)){
-    setGuess1(Number(g1));
+  var localGuesses = [0,0,0,0,0,0];
+  for(var x = 1;1<7;x++){
+    var g = getCookie("guess"+x+"Stat");
+    if(isString(g)){
+      localGuesses[x-1] = (Number(g));
+    }
   }
-
-  var g2 = getCookie("guess2Stat");
-  if(isString(g2)){
-    setGuess2(Number(g2));
-  }
-
-  var g3 = getCookie("guess3Stat");
-  if(isString(g3)){
-    setGuess3(Number(g3));
-  }
-
-  var g4 = getCookie("guess4Stat");
-  if(isString(g4)){
-    setGuess4(Number(g4));
-  }
-
-  var g5 = getCookie("guess5Stat");
-  if(isString(g5)){
-    setGuess5(Number(g5));
-  }
-
-  var g6 = getCookie("guess6Stat");
-  if(isString(g6)){
-    setGuess6(Number(g6));
-  }
+  setGuesses(localGuesses);
 
 
   });
@@ -121,7 +95,7 @@ useEffect(() =>{
               labels: ['1', '2', '3', '4', '5', '6'],
               datasets: [{
                   label: 'Guess Distribution',
-                  data: [guess1,guess2,guess3,guess4,guess5,guess6],
+                  data: [guesses],
                   backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',

@@ -22,12 +22,17 @@ function Finished({
     const router = useRouter();
 
     const names = router.query.names as string[] | null;
-   
+    var guesses = router.query.guesses as string[] | null;
+    if(guesses == null){
+        guesses = ["","","","","",""];
+    }
+    const stardleNumber = router.query.stardleNumber as string;
     console.log(names);
     const starPath = router.query.starPath as string;
     const won = (router.query.won as string) == "true";
     console.log(won)
     const number = Number(router.query.guessNumber as string);
+
     console.log(number);
     var div1Style = Styles.gray;
     var div2Style = Styles.gray;
@@ -36,7 +41,23 @@ function Finished({
     var div5Style = Styles.gray;
     var div6Style = Styles.gray;
 
-    const shareMessage = won? 'It took me '+number+'to get the stardle! Suck it!':"I didn't get the Stardle i'm pissed";
+    var shareMessage = "#Stardle "+stardleNumber+"\n";
+    shareMessage += won?"✅":"❌";
+    for(var x = 0;x<6;x++){
+        if(number == x+1){
+            shareMessage+="🟩";
+        }
+        else if(guesses[x] == ""){
+            shareMessage+="⬜️";
+        }
+        else if(guesses[x] == "SKIP"){
+            shareMessage+="⬛️";
+        }
+        else{
+            shareMessage+="🟥";
+        }
+    }
+
     switch (number){
         case 1:
             div1Style = Styles.green;

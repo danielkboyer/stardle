@@ -30,6 +30,7 @@ export default function Home({
         pixel6,
         names,
         dateStr,
+        stardleNumber,
 }:{
         starPath:string,
         pixel1:string,
@@ -40,6 +41,7 @@ export default function Home({
         pixel6:string,
         names:string[],
         dateStr:string,
+        stardleNumber:string
   
 }){
   
@@ -66,10 +68,10 @@ export default function Home({
     var number = 0;
     var localGuesses = ["","","","","",""];
     for(var x = 0;x<6;x++){
-      var guess = getCookie('guess'+x+dateStr);
+      var guess = getCookie('guess'+(x+1)+dateStr);
       if(isString(guess)){
         localGuesses[x] = guess;
-        number = x;
+        number = x+1;
       }
     }
     //set guesses to the guesses retrieved
@@ -87,12 +89,13 @@ export default function Home({
           guessNumber = number;
         }
       }
+      console.log("Guess Number "+guessNumber);
       //redirect the page
       solvedStardle(won,guessNumber);
       
     }
     
-  })
+  }, [setGuesses,setSolved])
   const skip = () =>{
     var element  = document.getElementById("celebInput");
     if(!(element instanceof HTMLInputElement))
@@ -111,7 +114,9 @@ export default function Home({
           starPath:starPath,
           names:names,
           won:won,
-          guessNumber:guessNumber
+          guessNumber:guessNumber,
+          stardleNumber:stardleNumber,
+          guesses:guesses
         
       }
       
@@ -227,12 +232,12 @@ export default function Home({
       if(guesses[x] == ""){
         guesses[x] = celebName;
         setGuesses(guesses);
-        setCookies("guess"+x+dateStr,celebName,{maxAge:60*60*24});
-        onNumber = x;
+        setCookies("guess"+(x+1)+dateStr,celebName,{maxAge:60*60*24});
+        onNumber = x+1;
         ga.event({
           action: "guess",
           params : {
-            guessNumber: x,
+            guessNumber: x+1,
             guess:celebName,
             celebrity:names[0],
           }
