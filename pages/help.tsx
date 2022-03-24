@@ -20,7 +20,7 @@ export default function Help({}){
           
             <div>
                 Try and guess the stars name based on the limited amount of pixels.{'\n'}
-                If you can't figure it out you can skip and more pixels will be revealed.{'\n'}
+                If you can&apos;t figure it out you can skip and more pixels will be revealed.{'\n'}
                 Wrong answers also reveal more pixels.
                
             </div>
