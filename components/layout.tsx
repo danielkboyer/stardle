@@ -125,7 +125,7 @@ export default function Layout({ children }:{
         
    
         <footer className={styles.footer}>
-          <a className={styles.bmcButton} target="_blank" href="https://www.buymeacoffee.com/danielkboyer">
+          <a className={styles.bmcButton} href="https://www.buymeacoffee.com/danielkboyer">
             <img  src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"/>
            </a>
       </footer>
