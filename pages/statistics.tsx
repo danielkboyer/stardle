@@ -17,6 +17,7 @@ export default function Statistics({}){
   const[win,setWin] = useState(0);
   const[currentStreak,setCurrentStreak] = useState(0);
   const[maxStreak,setMaxStreak] = useState(0);
+
 useEffect(() =>{  
   
   function isString(cookie: CookieValueTypes):cookie is string{
@@ -25,31 +26,36 @@ useEffect(() =>{
 
   var p1 = getCookie("playedStat");
   if(isString(p1)){
+    console.log(p1);
     setPlayed(Number(p1));
   }
   var win1 = getCookie("winStat");
   if(isString(win1)){
+    console.log(win1);
     setWin(Number(win1));
   }
   var currentStreak1 = getCookie("currentStreakStat");
   if(isString(currentStreak1)){
+    console.log(currentStreak1);
     setCurrentStreak(Number(currentStreak1));
   }
   var maxStreak1 = getCookie("maxStreakStat");
   if(isString(maxStreak1)){
+    console.log(maxStreak1);
     setMaxStreak(Number(maxStreak1));
   }
   var localGuesses = [0,0,0,0,0,0];
-  for(var x = 1;1<7;x++){
+  for(var x = 1;x<7;x++){
     var g = getCookie("guess"+x+"Stat");
     if(isString(g)){
-      localGuesses[x-1] = (Number(g));
+      console.log(g);
+      localGuesses[x-1] = Number(g);
     }
   }
   setGuesses(localGuesses);
 
 
-  });
+  },[]);
    
   
 
@@ -95,7 +101,7 @@ useEffect(() =>{
               labels: ['1', '2', '3', '4', '5', '6'],
               datasets: [{
                   label: 'Guess Distribution',
-                  data: [guesses],
+                  data: guesses,
                   backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',
