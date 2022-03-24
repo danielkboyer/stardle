@@ -51,22 +51,21 @@ export default function Home({
   const[solved,setSolved] = useState(false);
   const[guesses, setGuesses] = useState(["","","","","",""]);
 
-  
   useEffect(()=>{
 
+     //if the user already solved today's stardle
+     var localSolve = getCookie("solved"+dateStr);
+     if(isBool(localSolve))
+     {
+       setSolved(localSolve);
+     }
+ 
+ 
 
-    //if the user already solved today's stardle
-    var localSolve = getCookie("solved"+dateStr);
-    if(isBool(localSolve))
-    {
-      setSolved(localSolve);
-    }
-
-
-   
     //retrieve previous guesses in case of refresh
     var number = 0;
-    var localGuesses = ["","","","","",""];
+    var localGuesses = [...guesses];
+    console.log(localGuesses);
     for(var x = 0;x<6;x++){
       var guess = getCookie('guess'+(x+1)+dateStr);
       if(isString(guess)){
@@ -76,9 +75,11 @@ export default function Home({
     }
     //set guesses to the guesses retrieved
     setGuesses(localGuesses);
-    
-    //redirect the page if todays stardle has been solved
-    if(localSolve){
+
+
+  
+      //redirect the page if todays stardle has been solved
+      if(localSolve){
       var didWin = getCookie("won"+dateStr)
       var guessNumber = 7;
       var won = false;
@@ -95,7 +96,9 @@ export default function Home({
       
     }
     
-  }, [setGuesses,setSolved])
+  },[])
+  
+
   const skip = () =>{
     var element  = document.getElementById("celebInput");
     if(!(element instanceof HTMLInputElement))
@@ -114,9 +117,9 @@ export default function Home({
           starPath:starPath,
           names:names,
           won:won,
-          guessNumber:guessNumber,
           stardleNumber:stardleNumber,
-          guesses:guesses
+          guesses:guesses,
+          guessNumber: guessNumber
         
       }
       
@@ -218,7 +221,7 @@ export default function Home({
     //loop through names and check if any match
     var guessedCorrect = false;
     for(var x = 0;x<names.length;x++){
-      console.log(names[x]);
+      //console.log(names[x]);
       if(names[x] == celebName.toUpperCase()){
         guessedCorrect = true;
       }
@@ -228,10 +231,12 @@ export default function Home({
     
     
     //set the next guess
+    var localGuesses = [...guesses];
     for(var x = 0;x<6;x++){
-      if(guesses[x] == ""){
-        guesses[x] = celebName;
-        setGuesses(guesses);
+      if(localGuesses[x] == ""){
+        localGuesses[x] = celebName;
+        setGuesses(localGuesses);
+        console.log("Set Guesses");
         setCookies("guess"+(x+1)+dateStr,celebName,{maxAge:60*60*24});
         onNumber = x+1;
         ga.event({
@@ -265,7 +270,7 @@ export default function Home({
       })
 
     }
-    else if(guesses[4] != ""){
+    else if(localGuesses[5] != ""){
       won = false;
       localSolve = true;
       setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
