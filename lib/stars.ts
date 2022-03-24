@@ -40,7 +40,9 @@ export function getImageData(){
     const pixel5 = dayPath+"5.jpg";
     const pixel6 = dayPath+"6.jpg";
     const fullPath = path.join(dayDirectory,dayPath+"name.txt");
+    const numberPath = path.join(dayDirectory,dayPath+"number.txt");
     const starName = fs.readFileSync(fullPath,'utf-8');
+    const number = fs.readFileSync(numberPath,'utf-8');
     const names = starName.split(/\r?\n/);
     
     return {
@@ -53,7 +55,8 @@ export function getImageData(){
         pixel5:pixel5,
         pixel6:pixel6,
         names:names,
-        dateStr:dateStr
+        dateStr:dateStr,
+        stardleNumber:number,
 
       
       

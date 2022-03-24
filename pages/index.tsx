@@ -30,6 +30,7 @@ export default function Home({
         pixel6,
         names,
         dateStr,
+        stardleNumber,
 }:{
         starPath:string,
         pixel1:string,
@@ -40,6 +41,7 @@ export default function Home({
         pixel6:string,
         names:string[],
         dateStr:string,
+        stardleNumber:string
   
 }){
   
@@ -49,34 +51,35 @@ export default function Home({
   const[solved,setSolved] = useState(false);
   const[guesses, setGuesses] = useState(["","","","","",""]);
 
-  
   useEffect(()=>{
 
+     //if the user already solved today's stardle
+     var localSolve = getCookie("solved"+dateStr);
+     if(isBool(localSolve))
+     {
+       setSolved(localSolve);
+     }
+ 
+ 
 
-    //if the user already solved today's stardle
-    var localSolve = getCookie("solved"+dateStr);
-    if(isBool(localSolve))
-    {
-      setSolved(localSolve);
-    }
-
-
-   
     //retrieve previous guesses in case of refresh
     var number = 0;
-    var localGuesses = ["","","","","",""];
+    var localGuesses = [...guesses];
+    console.log(localGuesses);
     for(var x = 0;x<6;x++){
-      var guess = getCookie('guess'+x+dateStr);
+      var guess = getCookie('guess'+(x+1)+dateStr);
       if(isString(guess)){
         localGuesses[x] = guess;
-        number = x;
+        number = x+1;
       }
     }
     //set guesses to the guesses retrieved
     setGuesses(localGuesses);
-    
-    //redirect the page if todays stardle has been solved
-    if(localSolve){
+
+
+  
+      //redirect the page if todays stardle has been solved
+      if(localSolve){
       var didWin = getCookie("won"+dateStr)
       var guessNumber = 7;
       var won = false;
@@ -87,12 +90,15 @@ export default function Home({
           guessNumber = number;
         }
       }
+      console.log("Guess Number "+guessNumber);
       //redirect the page
-      solvedStardle(won,guessNumber);
+      solvedStardle(won,guessNumber,localGuesses);
       
     }
     
-  })
+  },[])
+  
+
   const skip = () =>{
     var element  = document.getElementById("celebInput");
     if(!(element instanceof HTMLInputElement))
@@ -102,7 +108,7 @@ export default function Home({
   };
 
   //redirects the page to finished
-  const solvedStardle = (won:boolean,guessNumber:number) => {
+  const solvedStardle = (won:boolean,guessNumber:number,localGuesses:string[]) => {
     
     router.replace({
       pathname:'/finished',
@@ -111,7 +117,9 @@ export default function Home({
           starPath:starPath,
           names:names,
           won:won,
-          guessNumber:guessNumber
+          stardleNumber:stardleNumber,
+          guesses:localGuesses,
+          guessNumber: guessNumber
         
       }
       
@@ -213,7 +221,7 @@ export default function Home({
     //loop through names and check if any match
     var guessedCorrect = false;
     for(var x = 0;x<names.length;x++){
-      console.log(names[x]);
+      //console.log(names[x]);
       if(names[x] == celebName.toUpperCase()){
         guessedCorrect = true;
       }
@@ -223,16 +231,18 @@ export default function Home({
     
     
     //set the next guess
+    var localGuesses = [...guesses];
     for(var x = 0;x<6;x++){
-      if(guesses[x] == ""){
-        guesses[x] = celebName;
-        setGuesses(guesses);
-        setCookies("guess"+x+dateStr,celebName,{maxAge:60*60*24});
-        onNumber = x;
+      if(localGuesses[x] == ""){
+        localGuesses[x] = celebName;
+        setGuesses(localGuesses);
+        console.log("Set Guesses");
+        setCookies("guess"+(x+1)+dateStr,celebName,{maxAge:60*60*24});
+        onNumber = x+1;
         ga.event({
           action: "guess",
           params : {
-            guessNumber: x,
+            guessNumber: x+1,
             guess:celebName,
             celebrity:names[0],
           }
@@ -260,7 +270,7 @@ export default function Home({
       })
 
     }
-    else if(guesses[4] != ""){
+    else if(localGuesses[5] != ""){
       won = false;
       localSolve = true;
       setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
@@ -279,7 +289,7 @@ export default function Home({
         onNumber = 7;
       }
       setStats(won,onNumber);
-      solvedStardle(won,onNumber);
+      solvedStardle(won,onNumber,localGuesses);
     }
     
     
