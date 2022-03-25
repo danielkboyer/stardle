@@ -17,18 +17,19 @@ export default function Layout({ children }:{
 }) {
   const [statisticsOpen, setStatisticsOpen] = useState(false);
    // Toggle for Modal
-   const toggleStatistics = () => {
-     
-    setStatisticsOpen(!statisticsOpen);
-
-
-    ga.event({
-      action: "opened_stats",
-      params : {
-        
+    const toggleStatistics = () => {
+    
+      setStatisticsOpen(!statisticsOpen);
+  
+  
+      ga.event({
+        action: "opened_stats",
+        params : {
+          
+        }
+      })
       }
-    })
-   }
+  
 
    const [stardleInfoOpen, setStardleInfoOpen] = useState(false);
    // Toggle for Modal
@@ -61,6 +62,15 @@ export default function Layout({ children }:{
     })
    }
 
+
+   const buyMeACoffee = () =>{
+    ga.event({
+      action: "buy_coffee",
+      params : {
+        
+      }
+    });
+   }
    
   return (
     
@@ -125,7 +135,7 @@ export default function Layout({ children }:{
         
    
         <footer className={styles.footer}>
-          <a className={styles.bmcButton} href="https://www.buymeacoffee.com/danielkboyer">
+          <a className={styles.bmcButton} onClick={buyMeACoffee} href="https://www.buymeacoffee.com/danielkboyer">
             <img  src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"/>
            </a>
       </footer>

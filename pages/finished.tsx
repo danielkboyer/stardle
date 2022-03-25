@@ -32,7 +32,6 @@ function Finished({
     const won = (router.query.won as string) == "true";
     console.log(won)
     const number = Number(router.query.guessNumber as string);
-
     console.log(number);
     var div1Style = Styles.gray;
     var div2Style = Styles.gray;
@@ -98,6 +97,43 @@ function Finished({
             break;
         }
 
+        var mtDate = new Date();
+        mtDate.setHours(mtDate.getUTCHours()-6);
+        mtDate.setDate(mtDate.getUTCDate()+1);
+        mtDate.setHours(0);
+        mtDate.setMinutes(0);
+        mtDate.setSeconds(0);
+        var countDownDate = mtDate.getTime();
+
+    const setTime = (data:string) =>{
+        if(document == null){
+            return;
+        }
+
+        document.getElementById("myTimer")!.innerHTML = data
+    }
+
+    const interval = setInterval(() => {
+
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+        
+        // Time calculations for hours, minutes and seconds
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        if(distance < 0){
+            setTime("00:00:00");
+            clearInterval(interval);
+        }
+        else{
+            setTime((hours < 10?"0"+hours:hours)+":"+(minutes < 10?"0"+minutes:minutes)+":"+(seconds < 10?"0"+seconds:seconds));
+        }
+    }, 1000);
+         
 
   return (
     
@@ -121,7 +157,12 @@ function Finished({
             <div className={Styles.dash+" "+ div5Style}></div>
             <div className={Styles.dash+" "+ div6Style}></div>
         </div>
-
+        <div className={Styles.timer}>
+            <span>Next Stardle</span>
+            <div id='myTimer'>
+                12:00:00
+            </div>
+        </div>
         <Share
           label="SHARE"
           title={shareMessage}
