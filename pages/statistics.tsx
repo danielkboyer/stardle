@@ -74,7 +74,7 @@ useEffect(() =>{
               </div>
               <div className={styles.flex1}>
               <div className={styles.semibold}>
-                  {(win/played)*100}
+                  {Math.round((win/played)*100)}
                 </div>
                 <div className={styles.customline}>
                   Win %

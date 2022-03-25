@@ -5,6 +5,19 @@ height: .25rem;
 margin: .125rem;
 }
 
+.timer{
+    align-items: center;
+    text-align: center;
+    color: var(--stardle_blue);
+    font-weight: bold;
+}
+
+.timer div{
+font-size:x-large;
+}
+.timer span{
+    font-size: medium;
+}
 .gray{
     background-color: gray;
 }
