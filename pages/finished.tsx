@@ -177,22 +177,13 @@ function Finished({
         </div>
 
         <div className={Styles.socials}>
-            <a
-            href={"https://www.facebook.com/stardle"}
-            >
-                <FacebookIcon size={32}/>
-            </a>
+          
             <a
             href={"https://www.instagram.com/stardle.app/?hl=en"}
             >
                 <Image src={"/icons8-instagram-48.png"} width={32} height={32}/>
             </a>
 
-            <a
-            href={"https://www.reddit.com/user/Stardle-App"}
-            >
-                <RedditIcon size={32}/>
-            </a>
             <a
             href={"https://twitter.com/Stardle_app"}
             >
