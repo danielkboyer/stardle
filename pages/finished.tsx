@@ -6,6 +6,7 @@ import Styles from '../styles/Finished.module.css'
 import { GetStaticProps } from 'next';
 import Share from '../components/share'
 import Image from 'next/image'
+import * as ga from '../lib/ga/index'
 import { getImageData, getStarData } from '../lib/stars';
 import {useRouter, withRouter} from 'next/router'
 import {FacebookShareButton,FacebookIcon, RedditIcon, TwitterIcon} from 'next-share'
@@ -115,6 +116,22 @@ function Finished({
         document.getElementById("myTimer")!.innerHTML = data
     }
 
+    const clickTwitter = () =>{
+        ga.event({
+            action: "twitter",
+            params : {
+            }
+          })
+    }
+
+    const clickInstagram = () =>{
+        ga.event({
+            action: "instagram",
+            params : {
+            }
+          })
+    }
+
     const interval = setInterval(() => {
 
         var now = new Date().getTime();
@@ -177,23 +194,16 @@ function Finished({
         </div>
 
         <div className={Styles.socials}>
+          
             <a
-            href={"https://www.facebook.com/stardle"}
-            >
-                <FacebookIcon size={32}/>
-            </a>
-            <a
+            onClick={clickInstagram}
             href={"https://www.instagram.com/stardle.app/?hl=en"}
             >
                 <Image src={"/icons8-instagram-48.png"} width={32} height={32}/>
             </a>
 
             <a
-            href={"https://www.reddit.com/user/Stardle-App"}
-            >
-                <RedditIcon size={32}/>
-            </a>
-            <a
+            onClick={clickTwitter}
             href={"https://twitter.com/Stardle_app"}
             >
                 <TwitterIcon size={32}/>
