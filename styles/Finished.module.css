@@ -29,6 +29,19 @@ font-size:x-large;
     background-color: green;
 }
 
+.followMe{
+    text-align: center;
+    color: var(--stardle_blue);
+    font-size:small;
+}
+.socials a{
+    margin: .15rem;
+}
+.socials{
+    align-content: center;
+    text-align: center;
+}
+
 .dashDiv{
     justify-content: center;
     display: flex;
