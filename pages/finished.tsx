@@ -8,6 +8,8 @@ import Share from '../components/share'
 import Image from 'next/image'
 import { getImageData, getStarData } from '../lib/stars';
 import {useRouter, withRouter} from 'next/router'
+import {FacebookShareButton,FacebookIcon, RedditIcon, TwitterIcon} from 'next-share'
+import Link from 'next/link';
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -168,6 +170,34 @@ function Finished({
           title={shareMessage}
           text={shareMessage}
           />
+        </div>
+
+        <div className={Styles.followMe}>
+            Follow me and share your results, or suggest ideas.
+        </div>
+
+        <div className={Styles.socials}>
+            <a
+            href={"https://www.facebook.com/stardle"}
+            >
+                <FacebookIcon size={32}/>
+            </a>
+            <a
+            href={"https://www.instagram.com/stardle.app/?hl=en"}
+            >
+                <Image src={"/icons8-instagram-48.png"} width={32} height={32}/>
+            </a>
+
+            <a
+            href={"https://www.reddit.com/user/Stardle-App"}
+            >
+                <RedditIcon size={32}/>
+            </a>
+            <a
+            href={"https://twitter.com/Stardle_app"}
+            >
+                <TwitterIcon size={32}/>
+            </a>
         </div>
     </Layout>
   )
