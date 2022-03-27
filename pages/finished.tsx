@@ -188,7 +188,7 @@ function Finished({
           text={shareMessage}
           />
         </div>
-
+{/* 
         <div className={Styles.followMe}>
             Follow me and share your results, or suggest ideas.
         </div>
@@ -208,7 +208,7 @@ function Finished({
             >
                 <TwitterIcon size={32}/>
             </a>
-        </div>
+        </div> */}
     </Layout>
   )
 }

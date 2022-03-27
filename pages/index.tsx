@@ -222,7 +222,7 @@ export default function Home({
     var guessedCorrect = false;
     for(var x = 0;x<names.length;x++){
       //console.log(names[x]);
-      if(names[x] == celebName.toUpperCase()){
+      if(names[x] == celebName.toUpperCase().trim()){
         guessedCorrect = true;
       }
     }
