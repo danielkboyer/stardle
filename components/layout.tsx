@@ -78,7 +78,9 @@ export default function Layout({ children }:{
 
       <Head>
         <title>Stardle - Guess famous stars</title>
-        <meta name="description" content="Guess famous celebrities! The new Wordle... Stardle!" />
+        <meta name="description" content="Guess famous celebrities! The new Wordle... Stardle! In this spin-off of Wordle, you receive a limited amount of pixels and must guess the star
+        the best you can. Every incorrect answer reveals more pixels. Share your results with your friends and come back for tommorows stardle." />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
         <link rel="icon" href="/favicon.ico" />
         
       </Head>
