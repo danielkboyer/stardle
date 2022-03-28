@@ -80,6 +80,7 @@ export default function Layout({ children }:{
         <title>Stardle - Guess famous stars</title>
         <meta name="description" content="Guess famous celebrities! The new Wordle... Stardle!" />
         <link rel="icon" href="/favicon.ico" />
+        
       </Head>
 
       <Modal

@@ -9,7 +9,9 @@ margin: .125rem;
     align-items: center;
     text-align: center;
     color: var(--stardle_blue);
-    font-weight: bold;
+    font-weight: bolder;
+    font-family: inherit;
+    
 }
 
 .timer div{
@@ -54,6 +56,7 @@ font-size:x-large;
     text-align: center;
     color: var(--stardle_blue);
     font-weight: bold;
+    size: 10rem;
 }
 .main{
     overflow: auto;

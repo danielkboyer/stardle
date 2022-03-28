@@ -13,4 +13,5 @@
     color: black;
     font-weight: bold;
     letter-spacing: 0.125rem;
+    font-family: inherit;
 }

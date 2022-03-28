@@ -22,7 +22,8 @@ export default class MyDocument extends Document {
           `,
             }}
           />
-        </Head>
+       <link href="https://fonts.googleapis.com/css2?family=Changa:wght@200&family=Merriweather:ital,wght@1,700&family=Pattaya&display=swap" rel="stylesheet"/>
+          </Head>
         <body>
           <Main />
           <NextScript />
