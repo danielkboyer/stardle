@@ -9,16 +9,19 @@ margin: .125rem;
     align-items: center;
     text-align: center;
     color: var(--stardle_blue);
-    font-weight: bolder;
     font-family: inherit;
-    
+    padding: 0;
+    background-color:whitesmoke;
 }
 
 .timer div{
-font-size:x-large;
+    font-size: 2.2rem;
+    margin: 0;
 }
 .timer span{
-    font-size: medium;
+    font-size: 1rem;
+    margin: 0;
+    
 }
 .gray{
     background-color: gray;
@@ -50,13 +53,18 @@ font-size:x-large;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
-
+.desc{
+    align-items: center;
+    text-align: center;
+    color: var(--stardle_blue);
+    font-size: 1.1rem;
+}
 .name{
     align-items: center;
     text-align: center;
     color: var(--stardle_blue);
     font-weight: bold;
-    size: 10rem;
+    font-size: 1.88rem;
 }
 .main{
     overflow: auto;
@@ -66,4 +74,5 @@ font-size:x-large;
     display: flex;
     margin-left: auto;
     margin-right: auto;
+    
 }

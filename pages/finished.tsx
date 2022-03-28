@@ -162,10 +162,10 @@ function Finished({
         <Image src={starPath} width={400} height={512}></Image>
         <div className={Styles.name}>{names != null && names[0]}</div>
         {won == true &&
-            <div className={Styles.name}>You Won! You Smart!</div>
+            <div className={Styles.desc}>You Won! You Smart!</div>
         }
         {won == false &&
-            <div className={Styles.name}>You didn&apos;t get todays Stardle... Try again tommorow.</div>
+            <div className={Styles.desc}>You didn&apos;t get todays Stardle... Try again tommorow.</div>
         }
         
         <div className={Styles.dashDiv}>
