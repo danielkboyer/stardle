@@ -50,8 +50,9 @@
   width: 20rem;
   background-color: #cfb8d4;
   border-radius: 1rem;
-  border-color: white;
-  border-width: 0ch;
+  border-color: var(--stardle_blue);
+    border-width: 1ch;
+    outline-color: var(--stardle_blue);
   
 }
 .h1{
