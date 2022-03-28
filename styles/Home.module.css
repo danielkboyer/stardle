@@ -42,8 +42,10 @@
   border: none;
   padding: .2rem;
   border-radius: .1rem;
+  font-family: inherit;
 }
 .input label{
+  font-family: inherit;
   display: block;
   color: var(--stardle_blue);
   font-size: 1.2rem;
@@ -53,7 +55,7 @@
 }
 
 .input input{
-  border: none;
+  font-family: inherit;
   padding: .2rem;
 }
 
@@ -117,8 +119,9 @@
   text-align: left;
   min-width: 250px;
   min-height: 1.8rem;
-  background-color: var(--stardle_blue);
-  color: #ffecd9;
+  background-color: var(--stardle_orange);
+  color: var(--stardle_blue);
+  border: 3px solid var(--stardle_blue);
 }
 .card {
   margin: 1rem;

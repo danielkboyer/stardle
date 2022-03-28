@@ -7,14 +7,15 @@
     position: absolute;
     top: 50%;
     left:50%;
-    height: 32rem;
+    height: 33rem;
     margin-top: -16rem;
     margin-left: -10rem;
     width: 20rem;
-    background-color: white;
+    background-color: #cfb8d4;
     border-radius: 1rem;
-    border-color: white;
-    border-width: 0ch;
+    border-color: var(--stardle_blue);
+    border-width: 1ch;
+    outline-color: var(--stardle_blue);
     
 }
 
@@ -43,11 +44,11 @@
   position: absolute;
   top: 50%;
   left:50%;
-  height: 16rem;
-  margin-top: -8rem;
+  height: 18rem;
+  margin-top: -9rem;
   margin-left: -10rem;
   width: 20rem;
-  background-color: white;
+  background-color: #cfb8d4;
   border-radius: 1rem;
   border-color: white;
   border-width: 0ch;
@@ -104,7 +105,7 @@
   vertical-align:middle;
 }
 .title {
-  
+  color: var(--stardle_blue);
   margin: 0;
   line-height: 1.15;
   display: inline;
