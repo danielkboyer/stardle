@@ -1,7 +1,7 @@
 
 import Image from 'next/image'
 import {useRouter} from 'next/router'
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect, KeyboardEventHandler} from 'react'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout'
 import { GetStaticProps,GetServerSideProps } from 'next'
@@ -98,6 +98,13 @@ export default function Home({
     
   },[])
   
+  const onInputEnter = (e:React.KeyboardEvent<HTMLInputElement>) =>{
+    console.log(e);
+    
+    if(e.key == "Enter"){
+      onGuessSubmit();
+    }
+  }
 
   const skip = () =>{
     var element  = document.getElementById("celebInput");
@@ -337,7 +344,7 @@ export default function Home({
         <div className={styles.input}>
           <label>Who&apos;s The Star?</label>
           
-          <input id='celebInput' placeholder='Type Celebrities Name Here'></input>
+          <input id='celebInput' onKeyDown={onInputEnter} placeholder='Type Celebrities Name Here'></input>
           <button onClick={() => onGuessSubmit()}>SUBMIT</button>
           <button onClick={() => skip()}>SKIP</button>
           

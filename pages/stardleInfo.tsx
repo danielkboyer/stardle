@@ -37,16 +37,11 @@ export default function StardleInfo({}){
             <h1>Stardle</h1>
           
             <div>
-                I am a recent graduate and I am currently looking for a job so I made Stardle. I also like choosing the stars every day. If you have suggestions for tommorows star email {' '}
+                I saw all of the new variations of Wordle and thought.. what if I added one more. The cool thing about Stardle is I choose the stars every day, if you want to see me do a star you want email {' '}
                 <Link href="mailto: danielkboyer@gmail.com">
                     <a onClick={email} className={styles.a}>me.</a>
                 </Link>
-                 {' '}If you need a developer you can find me at my{' '}
-                <Link href="https://www.linkedin.com/in/daniel-boyer-934293187/">
-                    <a onClick={linkedIn} className={styles.a}> 
-                    LinkedIn.
-                    </a>
-                </Link>
+               
             </div>
 
            
