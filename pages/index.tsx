@@ -128,7 +128,8 @@ export default function Home({
           won:won,
           stardleNumber:stardleNumber,
           guesses:localGuesses,
-          guessNumber: guessNumber
+          guessNumber: guessNumber,
+          coffeeNames: coffeeNames
         
       }
       

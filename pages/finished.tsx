@@ -29,6 +29,7 @@ function Finished({
     if(guesses == null){
         guesses = ["","","","","",""];
     }
+    const coffeeNames = router.query.coffeeNames as string;
     const stardleNumber = router.query.stardleNumber as string;
     console.log(names);
     const starPath = router.query.starPath as string;
@@ -157,7 +158,7 @@ function Finished({
   return (
     
     
-    <Layout>
+    <Layout coffeeNames={coffeeNames}>
         <div className={Styles.main}>
         <Image src={starPath} width={400} height={512}></Image>
         <div className={Styles.name}>{names != null && names[0]}</div>

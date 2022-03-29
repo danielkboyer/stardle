@@ -67,7 +67,7 @@ export default function Layout({ children, coffeeNames }:{
 
    const buyMeACoffee = () =>{
     ga.event({
-      action: "buy_coffee",
+      action: "buy_coffee_footer",
       params : {
         
       }

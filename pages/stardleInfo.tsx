@@ -22,7 +22,7 @@ export default function StardleInfo({
 
     const buyMeACoffee = () =>{
       ga.event({
-        action: "buy_coffee",
+        action: "buy_coffee_support",
         params : {
           
         }
