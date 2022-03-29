@@ -423,22 +423,19 @@ export const getStaticProps: GetStaticProps = async () => {
     })
   }).then(data => data.json()).catch(reason =>{
     console.log("Could not load Supporters: "+reason);
-    return JSON.parse('{"current_page":1,"data":[{"support_id":1926541,"support_note":null,"support_coffees":1,"transaction_id":"pi_3KijqzJEtINljGAa0oi0QfBN","support_visibility":1,"support_created_on":"2022-03-29 18:33:19","support_updated_on":"2022-03-29 18:33:19","transfer_id":null,"supporter_name":"Matthew","support_coffee_price":"5.0000","support_email":null,"is_refunded":null,"support_currency":"USD","referer":"https:\/\/www.stardle.app\/","country":"US","order_payload":null,"support_hidden":0,"payer_email":"matthewberry160@yahoo.com","payment_platform":"stripe","payer_name":"Matthew"}],"first_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","next_page_url":null,"path":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters","per_page":5,"prev_page_url":null,"to":1,"total":1}');
+    return JSON.parse('{"current_page":1,"data":[{"support_id":1926541,"support_note":null,"support_coffees":1,"transaction_id":"pi_3KijqzJEtINljGAa0oi0QfBN","support_visibility":1,"support_created_on":"2022-03-29 18:33:19","support_updated_on":"2022-03-29 18:33:19","transfer_id":null,"supporter_name":"Matthew Berry","support_coffee_price":"5.0000","support_email":null,"is_refunded":null,"support_currency":"USD","referer":"https:\/\/www.stardle.app\/","country":"US","order_payload":null,"support_hidden":0,"payer_email":"matthewberry160@yahoo.com","payment_platform":"stripe","payer_name":"Matthew"}],"first_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","next_page_url":null,"path":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters","per_page":5,"prev_page_url":null,"to":1,"total":1}');
   });
 
   //var res = JSON.parse('{"current_page":1,"data":[{"support_id":1926541,"support_note":null,"support_coffees":1,"transaction_id":"pi_3KijqzJEtINljGAa0oi0QfBN","support_visibility":1,"support_created_on":"2022-03-29 18:33:19","support_updated_on":"2022-03-29 18:33:19","transfer_id":null,"supporter_name":"Matthew","support_coffee_price":"5.0000","support_email":null,"is_refunded":null,"support_currency":"USD","referer":"https:\/\/www.stardle.app\/","country":"US","order_payload":null,"support_hidden":0,"payer_email":"matthewberry160@yahoo.com","payment_platform":"stripe","payer_name":"Matthew"}],"first_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","next_page_url":null,"path":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters","per_page":5,"prev_page_url":null,"to":1,"total":1}');
 
   var names = "";
-  var first = true;
   res.data.forEach((element: { supporter_name: string; support_coffee_price: string }) => {
-    if(!first){
-      names +=" ";
-    }
-    else{
-      first = false;
-    }
+  
+      
+    
     const price = parseFloat(element.support_coffee_price);
     names+="|"+element.supporter_name+": $"+Math.round(price)+"|";
+    names +=" ";
   });
 
 
