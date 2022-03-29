@@ -10,10 +10,12 @@ import StardleInfo from '../pages/stardleInfo';
 import Modal from 'react-modal'
 import * as ga from '../lib/ga/index'
 import Help from '../pages/help'
+import { GetStaticProps } from 'next'
 //440 by 660
 Modal.setAppElement("#__next")
-export default function Layout({ children }:{
+export default function Layout({ children, coffeeNames }:{
     children : React.ReactNode,
+    coffeeNames:string
 }) {
   const [statisticsOpen, setStatisticsOpen] = useState(false);
    // Toggle for Modal
@@ -65,7 +67,7 @@ export default function Layout({ children }:{
 
    const buyMeACoffee = () =>{
     ga.event({
-      action: "buy_coffee",
+      action: "buy_coffee_footer",
       params : {
         
       }
@@ -102,14 +104,14 @@ export default function Layout({ children }:{
         className={styles.ModalStar}
         overlayClassName={styles.Overlay}
       >
-        <StardleInfo />
+        <StardleInfo coffeeNames={coffeeNames}  />
       </Modal>
 
       <Modal
         isOpen={helpOpen}
         contentLabel="help modal"
         onRequestClose={()=>toggleHelpOpen()}
-        className={styles.ModalStar}
+        className={styles.ModalHelp}
         overlayClassName={styles.Overlay}
       >
         <Help />
@@ -145,3 +147,4 @@ export default function Layout({ children }:{
     </div>
   )
 }
+
