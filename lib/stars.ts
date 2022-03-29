@@ -57,6 +57,7 @@ export function getImageData(){
         names:names,
         dateStr:dateStr,
         stardleNumber:number,
+        coffeeNames:"placeHolder"
 
       
       

@@ -6,4 +6,46 @@
     align-items: center;
     text-align: center;
     border-color: transparent;
+    height: 28rem;
+}
+
+.title{
+    margin: 0rem;
+}
+.supporters{
+    text-align: left;
+    padding: 2rem;
+    height: 10rem;
+    overflow-y: auto;
+    overflow-x:auto;
+    flex-direction: column;
+}
+.text
+{
+    overflow-wrap:break-word;
+    flex-wrap: wrap;
+}
+
+.bmcButton img{
+    height: 38;
+    width: 38px;
+    margin-bottom: 1px;
+    box-shadow: none;
+    border: none ;
+    vertical-align: middle;
+  }
+  .bmcButton{
+    justify-content: center;
+    vertical-align: middle;
+    margin: auto;
+    background-color:var(--stardle_blue) !important;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    
+        
+    }
+
+.supporterTitle{
+    display: inline;
+    margin-right: .75rem;
 }

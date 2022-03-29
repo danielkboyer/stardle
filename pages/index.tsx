@@ -31,6 +31,7 @@ export default function Home({
         names,
         dateStr,
         stardleNumber,
+        coffeeNames,
 }:{
         starPath:string,
         pixel1:string,
@@ -41,7 +42,8 @@ export default function Home({
         pixel6:string,
         names:string[],
         dateStr:string,
-        stardleNumber:string
+        stardleNumber:string,
+        coffeeNames:string,
   
 }){
   
@@ -307,7 +309,7 @@ export default function Home({
   return (
     
     
-    <Layout>
+    <Layout coffeeNames={coffeeNames}>
     <div className={styles.container}>
 
       <main className={styles.main}>
@@ -322,7 +324,7 @@ export default function Home({
         }
         {
           guesses[1] == "" && guesses[0] != "" &&
-          <Image id='pixel2' src={pixel2} alt="Star 2" width={400} height={512} hidden={true}/>
+          <Image id='pixel2' loading='eager'  src={pixel2} alt="Star 2" width={400} height={512} hidden={true}/>
         }
         {
           guesses[2] == "" && guesses[1] != "" &&
@@ -409,7 +411,40 @@ export default function Home({
 
 export const getStaticProps: GetStaticProps = async () => {
   
+  // var res = await fetch('https://developers.buymeacoffee.com/api/v1/supporters?all',{
+    
+  //   method:'GET',
+  //   cache:'no-cache',
+  //   headers: new Headers({
+  //     'Accept':'application/json',
+  //     'Content-Type':'application/json',
+  //     "Authorization": "Bearer "+process.env.BUY_ME_A_COFFEE_READ,
+  //   })
+  // }).then(data => data.text());
+
+  var res = JSON.parse('{"current_page":1,"data":[{"support_id":1926541,"support_note":null,"support_coffees":1,"transaction_id":"pi_3KijqzJEtINljGAa0oi0QfBN","support_visibility":1,"support_created_on":"2022-03-29 18:33:19","support_updated_on":"2022-03-29 18:33:19","transfer_id":null,"supporter_name":"Matthew","support_coffee_price":"5.0000","support_email":null,"is_refunded":null,"support_currency":"USD","referer":"https:\/\/www.stardle.app\/","country":"US","order_payload":null,"support_hidden":0,"payer_email":"matthewberry160@yahoo.com","payment_platform":"stripe","payer_name":"Matthew"}],"first_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","next_page_url":null,"path":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters","per_page":5,"prev_page_url":null,"to":1,"total":1}');
+
+  console.log(res);
+  var names = "";
+  var first = true;
+  res.data.forEach((element: { supporter_name: string; support_coffee_price: string }) => {
+    if(!first){
+      names +=",";
+    }
+    else{
+      first = false;
+    }
+    const price = parseFloat(element.support_coffee_price);
+    names+=element.supporter_name+":"+Math.round(price);
+  });
+
+  for(var x = 0;x<100;x++){
+    names +="TEST:10";
+  }
+
+  console.log("Getting Static Props Index");
   const imageData = getImageData();
+  imageData.coffeeNames = names;
   return {
     props:  imageData,
     revalidate:60
