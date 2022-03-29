@@ -420,6 +420,7 @@ export const getStaticProps: GetStaticProps = async () => {
       'Accept':'application/json',
       'Content-Type':'application/json',
       "Authorization": "Bearer "+process.env.BUY_ME_A_COFFEE_READ,
+      "User-Agent":"Stardle"
     })
   }).then(data => data.json()).catch(reason =>{
     console.log("Could not load Supporters: "+reason);
