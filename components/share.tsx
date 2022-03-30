@@ -11,9 +11,10 @@ function Share({ label, text, title }:
         text:string,
         title:string
     }) {
-    let url = useRouter().basePath;
+    let url = "https://www.stardle.app";
+    //console.log("url: "+url);
     const shareDetails = { url, title, text };
-  
+    
     const handleSharing = async () => {
 
       ga.event({
@@ -23,6 +24,7 @@ function Share({ label, text, title }:
           text:text, 
         }
       })
+     
       if (navigator.share) {
         try {
           await navigator
@@ -38,8 +40,14 @@ function Share({ label, text, title }:
         console.log(
           "Web share is currently not supported on this browser. Copying to clipboard"
         );
-        alertService.success("Copied to clipboard",{fade:3});
-        navigator.clipboard.writeText(shareDetails.text+"\n"+shareDetails.url);
+
+        navigator.clipboard.writeText(shareDetails.text+"\n"+url).then(()=>{
+          alertService.success("Copied to clipboard",{fade:3});
+        }).catch(()=>{
+          alertService.error("Unable to copy to clipboard",{fade:3});
+        });
+        
+       
       }
     };
     return (
