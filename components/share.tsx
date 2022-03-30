@@ -3,6 +3,8 @@ import React from 'react'
 import {useRouter} from 'next/router'
 import styles from '../components/share.module.css'
 import * as ga from '../lib/ga/index'
+import {alertService} from '../services/alert.service';
+import { Alert } from "./Alert";
 function Share({ label, text, title }:
     {
         label:string,
@@ -21,7 +23,6 @@ function Share({ label, text, title }:
           text:text, 
         }
       })
-
       if (navigator.share) {
         try {
           await navigator
@@ -37,14 +38,17 @@ function Share({ label, text, title }:
         console.log(
           "Web share is currently not supported on this browser. Copying to clipboard"
         );
-
+        alertService.success("Copied to clipboard",{fade:3});
         navigator.clipboard.writeText(shareDetails.text+"\n"+shareDetails.url);
       }
     };
     return (
+      <div className={styles.center}>
+        <Alert />
       <button className={styles.sharerButton} onClick={handleSharing}>
         <span className="sharer-button-text">{label}</span>
       </button>
+      </div>
     )
   }
 
