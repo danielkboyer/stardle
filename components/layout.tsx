@@ -118,6 +118,7 @@ export default function Layout({ children, coffeeNames }:{
       </Modal>
 
       <main>
+        
         <div className={styles.topnav}>
           <Link  href='/'>
             <h1 className={styles.title}>STARDLE</h1>
