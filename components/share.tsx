@@ -35,8 +35,10 @@ function Share({ label, text, title }:
       } else {
         // fallback code
         console.log(
-          "Web share is currently not supported on this browser. Please provide a callback"
+          "Web share is currently not supported on this browser. Copying to clipboard"
         );
+
+        navigator.clipboard.writeText(shareDetails.text+"\n"+shareDetails.url);
       }
     };
     return (
