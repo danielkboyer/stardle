@@ -17,12 +17,13 @@
     "js-cookie": "^3.0.1",
     "next": "12.1.0",
     "next-share": "^0.13.0",
+    "prop-types": "^15.7.2",
     "react": "17.0.2",
     "react-chartjs-2": "^4.0.1",
     "react-dom": "17.0.2",
     "react-modal": "^3.14.4",
     "rxjs": "^7.3.0",
-    "prop-types":"^15.7.2"
+    "swr": "^1.2.2"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.35",

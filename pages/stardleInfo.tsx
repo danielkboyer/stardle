@@ -11,14 +11,27 @@ import styles from '../styles/StardleInfo.module.css';
 import Link from 'next/link';
 import * as ga from '../lib/ga/index'
 import { GetStaticProps } from 'next';
+import useSWR from 'swr'
+
+const fetcher = async (url:string) => {
+  const res = await fetch(url)
+  const data = await res.json()
+
+  if (res.status !== 200) {
+    throw new Error(data.message)
+  }
+  return data
+}
 
 export default function StardleInfo({
-  coffeeNames
-}:{
-  coffeeNames:string
+
 }){
 
-  
+  const { data, error } = useSWR(
+    () => `/api/coffee/`,
+    fetcher
+  )
+
 
     const buyMeACoffee = () =>{
       ga.event({
@@ -58,7 +71,18 @@ export default function StardleInfo({
             </div>
 
            <div className={styles.supporters}>
-             <text className={styles.text}>{coffeeNames}</text>
+             
+                {
+                  (error) && <div>{error.message}</div>
+                }
+                {
+                  (!data) &&  <div>Loading...</div>
+                }
+                {
+                  data && <text className={styles.text}>{data.names}</text>
+                }
+             
+
            </div>
         </main>
    
