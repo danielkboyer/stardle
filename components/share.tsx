@@ -5,23 +5,70 @@ import styles from '../components/share.module.css'
 import * as ga from '../lib/ga/index'
 import {alertService} from '../services/alert.service';
 import { Alert } from "./Alert";
-function Share({ label, text, title }:
+import { getShareMessage } from "../lib/share";
+function Share({ number, guesses, won,stardleNumber }:
     {
-        label:string,
-        text:string,
-        title:string
+      number:number,
+      guesses:string[],
+      won:boolean,
+      stardleNumber:string
     }) {
+    
+    var shareMessage = getShareMessage(number,guesses,won,stardleNumber);
     let url = "https://www.stardle.app";
     //console.log("url: "+url);
-    const shareDetails = { url, title, text };
+    const shareDetails = { url, title:shareMessage, text:shareMessage };
     
+    var div1Style = styles.gray;
+    var div2Style = styles.gray;
+    var div3Style = styles.gray;
+    var div4Style = styles.gray;
+    var div5Style = styles.gray;
+    var div6Style = styles.gray;
+    switch (number){
+      case 1:
+          div1Style = styles.green;
+          break;
+      case 2:
+          div1Style = styles.yellow;
+          div2Style = styles.green;
+          break;
+      case 3:
+          div1Style = styles.yellow;
+          div2Style = styles.yellow;
+          div3Style = styles.green;
+          break;
+      case 4:
+          div1Style = styles.yellow;
+          div2Style = styles.yellow;
+          div3Style = styles.yellow;
+          div4Style = styles.green;
+          break;
+      case 5:
+          div1Style = styles.yellow;
+          div2Style = styles.yellow;
+          div3Style = styles.yellow;
+          div4Style = styles.yellow;
+          div5Style = styles.green;
+          break;
+      case 6:
+          div1Style = styles.yellow;
+          div2Style = styles.yellow;
+          div3Style = styles.yellow;
+          div4Style = styles.yellow;
+          div5Style = styles.yellow;
+          div6Style = styles.green;
+          break;
+      default:
+          break;
+      }
     const handleSharing = async () => {
 
       ga.event({
-        action: "share",
+        action: "share_"+stardleNumber,
         params : {
-          title:title,
-          text:text, 
+          title:shareMessage,
+          text:shareMessage, 
         }
       })
      
@@ -51,11 +98,22 @@ function Share({ label, text, title }:
       }
     };
     return (
+      <div>
+      <div className={styles.dashDiv}>
+      <div className={styles.dash+" "+ div1Style}></div>
+      <div className={styles.dash+" "+ div2Style}></div>
+      <div className={styles.dash+" "+ div3Style}></div>
+      <div className={styles.dash+" "+ div4Style}></div>
+      <div className={styles.dash+" "+ div5Style}></div>
+      <div className={styles.dash+" "+ div6Style}></div>
+      </div>
+
       <div className={styles.center}>
         <Alert />
       <button className={styles.sharerButton} onClick={handleSharing}>
-        <span className="sharer-button-text">{label}</span>
+        <span className="sharer-button-text">{'SHARE'}</span>
       </button>
+      </div>
       </div>
     )
   }

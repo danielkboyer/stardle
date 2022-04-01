@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import {useRouter} from 'next/router'
 import React, {useState,useEffect, KeyboardEventHandler} from 'react'
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/History.module.css';
 import Layout from '../../components/layout'
 import { GetStaticProps,GetServerSideProps, GetStaticPaths } from 'next'
 import {getAllStardleIds, getStardleData} from '../../lib/histories'
@@ -12,6 +12,8 @@ import * as ga from '../../lib/ga/index'
 import Guess from '../../components/guess'
 import Images from '../../components/images'
 import { ParsedUrlQuery } from 'querystring'
+import Link from 'next/link';
+import Share from '../../components/share';
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -33,165 +35,32 @@ export default function History({
         stardleNumber:string
   
 }){
-  
-  const router = useRouter();
- 
-  const hideImageClass = styles.hide;
+  console.log(`Received StarPath: ${starPath}\n
+  pixels ${pixels}\n
+  names ${names}\n
+  dateStr ${dateStr}\n
+  stardleNumber ${stardleNumber}`);
+
+  var prevNumber = (parseInt(stardleNumber)-1).toString();
+  const[shareMessage,setShareMessage] = useState("But like you didn't finish yet....");
   const[solved,setSolved] = useState(false);
+  const[won,setWon] = useState(false);
   const[guesses, setGuesses] = useState(["","","","","",""]);
+  const[onNumber,setOnNumber] = useState(7);
 
-  useEffect(()=>{
-
-     //if the user already solved today's stardle
-     var localSolve = getCookie("solved"+dateStr);
-     if(isBool(localSolve))
-     {
-       setSolved(localSolve);
-     }
- 
- 
-
-    //retrieve previous guesses in case of refresh
-    var number = 0;
-    var localGuesses = [...guesses];
-    console.log(localGuesses);
-    for(var x = 0;x<6;x++){
-      var guess = getCookie('guess'+(x+1)+dateStr);
-      if(isString(guess)){
-        localGuesses[x] = guess;
-        number = x+1;
-      }
-    }
-    //set guesses to the guesses retrieved
-    setGuesses(localGuesses);
-
-
-  
-      //redirect the page if todays stardle has been solved
-      if(localSolve){
-      var didWin = getCookie("won"+dateStr)
-      var guessNumber = 7;
-      var won = false;
-      if(isBool(didWin)){
-        console.log("didWin");
-        if(didWin){
-          won = true;
-          guessNumber = number;
-        }
-      }
-      console.log("Guess Number "+guessNumber);
-      //redirect the page
-      solvedStardle(won,guessNumber,localGuesses);
-      
-    }
-    
-  },[])
-
-  //redirects the page to finished
-  const solvedStardle = (won:boolean,guessNumber:number,localGuesses:string[]) => {
-    
-    router.replace({
-      pathname:'/finished',
-      
-      query:{
-          starPath:starPath,
-          names:names,
-          won:won,
-          stardleNumber:stardleNumber,
-          guesses:localGuesses,
-          guessNumber: guessNumber
-        
-      }
-      
-    },{
-        pathname:"/"
-    },
-    {
-      
-    })
-  }
-
-  const setStats = (solved:boolean, guessNumber:Number) =>{
-
-    //set which guess they solved it on
-    var currentNumber = 0;
-    var cookie = getCookie("guess"+guessNumber+"Stat");
-    if(isString(cookie)){
-      currentNumber = Number(cookie);
-    }
-    setCookies("guess"+guessNumber+"Stat",currentNumber+1,{maxAge:60*60*24*5840});
-
-    //increase the played stat by 1
-    var currentPlayNumber = 0;
-    var cookiePlay = getCookie("playedStat");
-    if(isString(cookiePlay)){
-      currentPlayNumber = Number(cookiePlay);
-    }
-    setCookies("playedStat",currentPlayNumber+1,{maxAge:60*60*24*5840});
-
-    //if they solved the problem increase the win stat by won
-    if(solved){
-      var currentWinNumber = 0;
-      var cookieWin = getCookie("winStat");
-      if(isString(cookieWin)){
-        currentWinNumber = Number(cookieWin);
-      }
-      setCookies("winStat",currentWinNumber+1,{maxAge:60*60*24*5840});
-    }
-
-    //we need to find out if they solved yesterday which tells us if we keep there current streak going
-    var solvedYesterday = false;
-    var yesterdayCookie = getCookie("won"+dateStr);
-    if(isBool(yesterdayCookie)){
-      solvedYesterday = yesterdayCookie;
-    }
-    var currentStreakNumber = 0;
-    var cookieCurrentStreak = getCookie("currentStreakStat");
-    if(isString(cookieCurrentStreak)){
-      currentStreakNumber = Number(cookieCurrentStreak);
-    }
-
-    if(!solved)
-    {
-      currentStreakNumber = 0
-    }
-    else if(solvedYesterday)
-    {
-      currentStreakNumber +=1;
-    }
-    else
-    {
-      currentStreakNumber = 1
-    }
-
-    
-    setCookies("currentStreakStat",currentStreakNumber,{maxAge:60*60*24*5840});
-
-    
-    var currentMaxStreakNumber = 0;
-    var cookieMaxCurrentStreak = getCookie("maxStreakStat");
-    if(isString(cookieMaxCurrentStreak)){
-      currentMaxStreakNumber = Number(cookieMaxCurrentStreak);
-    }
-    if(currentStreakNumber > currentMaxStreakNumber){
-      currentMaxStreakNumber = currentStreakNumber;
-    }
-    setCookies("maxStreakStat",currentMaxStreakNumber,{maxAge:60*60*24*5840});
-  }
   const onGuessSubmit = (celebName:string) => {
     
     //if the problem is solved or they have guessed the last guess
     if(guesses[5] != "" || solved)
       return;
 
-    var won = false;
-    var onNumber = 0;
+    var onNumberLocal = 0;
     var localSolve = false;
 
     //loop through names and check if any match
     var guessedCorrect = false;
     for(var x = 0;x<names.length;x++){
-      //console.log(names[x]);
+
       if(names[x] == celebName.toUpperCase().trim()){
         guessedCorrect = true;
       }
@@ -207,10 +76,10 @@ export default function History({
         localGuesses[x] = celebName;
         setGuesses(localGuesses);
         console.log("Set Guesses");
-        setCookies("guess"+(x+1)+dateStr,celebName,{maxAge:60*60*24});
-        onNumber = x+1;
+
+        onNumberLocal = x+1;
         ga.event({
-          action: "guess",
+          action: "guess_"+stardleNumber,
           params : {
             guessNumber: x+1,
             guess:celebName,
@@ -224,14 +93,11 @@ export default function History({
 
     if(guessedCorrect){
       console.log("Correct");
-      setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
-      setCookies("won"+dateStr,true,{maxAge:60*60*24*3});
       setSolved(true);
-      won = true;
+      setWon(true);
       localSolve = true;
-
       ga.event({
-        action: "won",
+        action: "won_"+stardleNumber,
         params : {
           guessNumber: onNumber,
           guess:celebName,
@@ -241,11 +107,11 @@ export default function History({
 
     }
     else if(localGuesses[5] != ""){
-      won = false;
+      setWon(false);
+      setSolved(true);
       localSolve = true;
-      setCookies("solved"+dateStr,true,{maxAge:60*60*24*3});
       ga.event({
-        action: "lost",
+        action: "lost_"+stardleNumber,
         params : {
           guess:celebName,
           celebrity:names[0]
@@ -253,20 +119,19 @@ export default function History({
       })
     }
 
-    //check if they solved the puzzle
-    if(localSolve == true){
-      if(!won){
-        onNumber = 7;
-      }
-      setStats(won,onNumber);
-      solvedStardle(won,onNumber,localGuesses);
+    if(localSolve){
+      setOnNumber(onNumberLocal);
     }
-    
-    
 
 
 
   };
+
+  function resetVariables() {
+    setSolved(false);
+    setWon(false);
+    setGuesses(["","","","","",""]);
+  }
   return (
     
     
@@ -277,7 +142,16 @@ export default function History({
 
         <Images guesses={guesses} pixels={pixels}/> 
        
-
+        <Link href={`/stardles/${prevNumber}`}>
+            <a onClick={resetVariables}>{"More?! Go Yesterday Again."}</a>
+        </Link>
+        {(won || solved) &&
+        <Share  
+        number={onNumber}
+        guesses={guesses}
+        won={won}
+        stardleNumber={stardleNumber}
+        />}
         <Guess guesses={guesses} guessFunction={onGuessSubmit} />
         
       </main>
@@ -288,6 +162,7 @@ export default function History({
 }
 export const getStaticPaths:GetStaticPaths = async ()=>{
   const paths = getAllStardleIds();
+  console.log("Static Paths: "+paths);
   return {
     paths,
     fallback: false
@@ -298,18 +173,25 @@ interface IParams extends ParsedUrlQuery{
 }
 export const getStaticProps: GetStaticProps = async (context) => {
   
-  const {params} = context.params as IParams;
-
-  const postData = getStardleData(params as string) as {  
+  console.log(context);
+  const params = context.params as IParams;
+  console.log(params);
+  const postData = getStardleData(params.id) as {  
     starPath:string,
     pixels:string[],
     names:string[],
     dateStr:string,
     stardleNumber:string}
+    console.log(postData);
   return {
-    props: {
-      postData
-    }
+    props:  postData,
+    revalidate: 60
+    
+    
   }
   
 }
+
+
+
+

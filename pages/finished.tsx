@@ -11,6 +11,7 @@ import { getImageData, getStarData } from '../lib/stars';
 import {useRouter, withRouter} from 'next/router'
 import {FacebookShareButton,FacebookIcon, RedditIcon, TwitterIcon} from 'next-share'
 import Link from 'next/link';
+import { getShareMessage } from '../lib/share';
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -30,76 +31,14 @@ function Finished({
         guesses = ["","","","","",""];
     }
     const stardleNumber = router.query.stardleNumber as string;
+    const prevNumber = (parseInt(stardleNumber) - 1).toString();
     console.log(names);
     const starPath = router.query.starPath as string;
     const won = (router.query.won as string) == "true";
     console.log(won)
     const number = Number(router.query.guessNumber as string);
     console.log(number);
-    var div1Style = Styles.gray;
-    var div2Style = Styles.gray;
-    var div3Style = Styles.gray;
-    var div4Style = Styles.gray;
-    var div5Style = Styles.gray;
-    var div6Style = Styles.gray;
-
-    var shareMessage = "#Stardle "+stardleNumber+"\n";
-    shareMessage += won?"✅":"❌";
-    for(var x = 0;x<6;x++){
-        if(number == x+1){
-            shareMessage+="🟩";
-        }
-        else if(guesses[x] == ""){
-            shareMessage+="⬜️";
-        }
-        else if(guesses[x] == "SKIP"){
-            shareMessage+="⬛️";
-        }
-        else{
-            shareMessage+="🟥";
-        }
-    }
-
-    console.log(shareMessage);
-
-    switch (number){
-        case 1:
-            div1Style = Styles.green;
-            break;
-        case 2:
-            div1Style = Styles.yellow;
-            div2Style = Styles.green;
-            break;
-        case 3:
-            div1Style = Styles.yellow;
-            div2Style = Styles.yellow;
-            div3Style = Styles.green;
-            break;
-        case 4:
-            div1Style = Styles.yellow;
-            div2Style = Styles.yellow;
-            div3Style = Styles.yellow;
-            div4Style = Styles.green;
-            break;
-        case 5:
-            div1Style = Styles.yellow;
-            div2Style = Styles.yellow;
-            div3Style = Styles.yellow;
-            div4Style = Styles.yellow;
-            div5Style = Styles.green;
-            break;
-        case 6:
-            div1Style = Styles.yellow;
-            div2Style = Styles.yellow;
-            div3Style = Styles.yellow;
-            div4Style = Styles.yellow;
-            div5Style = Styles.yellow;
-            div6Style = Styles.green;
-            break;
-        default:
-            break;
-        }
-
+   
         var mtDate = new Date();
         mtDate.setHours(mtDate.getUTCHours()-6);
         mtDate.setDate(mtDate.getUTCDate()+1);
@@ -168,15 +107,9 @@ function Finished({
             <div className={Styles.desc}>You didn&apos;t get todays Stardle... Try again tommorow.</div>
         }
         
-        <div className={Styles.dashDiv}>
-            <div className={Styles.dash+" "+ div1Style}></div>
-            <div className={Styles.dash+" "+ div2Style}></div>
-            <div className={Styles.dash+" "+ div3Style}></div>
-            <div className={Styles.dash+" "+ div4Style}></div>
-            <div className={Styles.dash+" "+ div5Style}></div>
-            <div className={Styles.dash+" "+ div6Style}></div>
-        </div>
-        <History></History>
+        <Link href={`/stardles/${prevNumber}`}>
+            <a>{"Want more? Play Yesterdays Stardle"}</a>
+        </Link>
         <div className={Styles.timer}>
             <span>Next Stardle</span>
             <div id='myTimer'>
@@ -184,9 +117,10 @@ function Finished({
             </div>
         </div>
         <Share
-          label="SHARE"
-          title={shareMessage}
-          text={shareMessage}
+          number={number}
+          guesses={guesses}
+          won={won}
+          stardleNumber={stardleNumber}
           />
         </div>
 {/* 

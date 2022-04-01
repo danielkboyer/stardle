@@ -24,9 +24,11 @@ export function getAllStardleIds() {
     //   }
     // ]
     var numbers = [];
+    console.log("Stardle Number:"+imageData.stardleNumber)
     for(var x = 1;x<= parseInt(imageData.stardleNumber);x++){
       numbers.push(x);
     }
+    console.log("Numbers: "+numbers);
     return numbers.map(number => {
       return {
         params: {
@@ -41,7 +43,7 @@ export function getAllStardleIds() {
 
     const dateObj = new Date();
     dateObj.setHours(dateObj.getHours() - 6);
-    const month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
     var dateStr = year+""+month+""+day;
@@ -49,9 +51,8 @@ export function getAllStardleIds() {
     
     var numberPath = path.join(dayDirectory,dayPath+"number.txt");
     var number = parseInt(fs.readFileSync(numberPath,'utf-8'));
-
     dateObj.setDate(dateObj.getUTCDate() - (number-parseInt(id)));
-
+    dateObj.getUTCMonth() + 1;
     day = dateObj.getUTCDate();
     year = dateObj.getUTCFullYear();
     dateStr = year+""+month+""+day;
@@ -62,6 +63,7 @@ export function getAllStardleIds() {
    
     const fullPath = path.join(dayDirectory,dayPath+"name.txt");
     numberPath = path.join(dayDirectory,dayPath+"number.txt");
+    console.log(fullPath);
     const starName = fs.readFileSync(fullPath,'utf-8');
     const names = starName.split(/\r?\n/);
 
