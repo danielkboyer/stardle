@@ -13,9 +13,8 @@ import Help from '../pages/help'
 import { GetStaticProps } from 'next'
 //440 by 660
 Modal.setAppElement("#__next")
-export default function Layout({ children, coffeeNames }:{
+export default function Layout({ children}:{
     children : React.ReactNode,
-    coffeeNames:string
 }) {
   const [statisticsOpen, setStatisticsOpen] = useState(false);
    // Toggle for Modal
@@ -104,7 +103,7 @@ export default function Layout({ children, coffeeNames }:{
         className={styles.ModalStar}
         overlayClassName={styles.Overlay}
       >
-        <StardleInfo coffeeNames={coffeeNames}  />
+        <StardleInfo  />
       </Modal>
 
       <Modal

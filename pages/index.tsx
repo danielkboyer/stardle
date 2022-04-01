@@ -13,6 +13,8 @@ import {getCookie, setCookies} from 'cookies-next'
 import { CookieValueTypes } from 'cookies-next/lib/types'
 import Link from 'next/link'
 import * as ga from '../lib/ga/index'
+import Guess from '../components/guess'
+import Images from '../components/images'
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -22,28 +24,16 @@ function isString(cookie: CookieValueTypes):cookie is string{
 
 export default function Home({
         starPath,
-        pixel1,
-        pixel2,
-        pixel3,
-        pixel4,
-        pixel5,
-        pixel6,
+        pixels,
         names,
         dateStr,
-        stardleNumber,
-        coffeeNames,
+        stardleNumber
 }:{
         starPath:string,
-        pixel1:string,
-        pixel2:string,
-        pixel3:string,
-        pixel4:string,
-        pixel5:string,
-        pixel6:string,
+        pixels:string[]
         names:string[],
         dateStr:string,
-        stardleNumber:string,
-        coffeeNames:string,
+        stardleNumber:string
   
 }){
   
@@ -99,22 +89,6 @@ export default function Home({
     }
     
   },[])
-  
-  const onInputEnter = (e:React.KeyboardEvent<HTMLInputElement>) =>{
-    console.log(e);
-    
-    if(e.key == "Enter"){
-      onGuessSubmit();
-    }
-  }
-
-  const skip = () =>{
-    var element  = document.getElementById("celebInput");
-    if(!(element instanceof HTMLInputElement))
-      throw new Error('Expected element to be an HTMLScriptELement, was ${element && element.constructor && element.constructor.name || element}');
-    element.value = "SKIP";
-    onGuessSubmit();
-  };
 
   //redirects the page to finished
   const solvedStardle = (won:boolean,guessNumber:number,localGuesses:string[]) => {
@@ -128,8 +102,7 @@ export default function Home({
           won:won,
           stardleNumber:stardleNumber,
           guesses:localGuesses,
-          guessNumber: guessNumber,
-          coffeeNames: coffeeNames
+          guessNumber: guessNumber
         
       }
       
@@ -208,7 +181,7 @@ export default function Home({
     }
     setCookies("maxStreakStat",currentMaxStreakNumber,{maxAge:60*60*24*5840});
   }
-  const onGuessSubmit = () => {
+  const onGuessSubmit = (celebName:string) => {
     
     //if the problem is solved or they have guessed the last guess
     if(guesses[5] != "" || solved)
@@ -217,16 +190,6 @@ export default function Home({
     var won = false;
     var onNumber = 0;
     var localSolve = false;
-
-    //retrieve input data
-    var element  = document.getElementById("celebInput");
-    if(!(element instanceof HTMLInputElement))
-      throw new Error('Expected element to be an HTMLScriptELement, was ${element && element.constructor && element.constructor.name || element}');
-    var celebName = element.value;
-    element.value = "";
-
-    if(celebName == "")
-      return;
 
     //loop through names and check if any match
     var guessedCorrect = false;
@@ -310,98 +273,15 @@ export default function Home({
   return (
     
     
-    <Layout coffeeNames={coffeeNames}>
+    <Layout>
     <div className={styles.container}>
 
       <main className={styles.main}>
 
+        <Images guesses={guesses} pixels={pixels}/> 
+       
 
-
-        <div className={styles.overlapGrid}>
-        
-        {
-          guesses[0] == "" && 
-          <Image id='pixel1' priority={true} src={pixel1} alt="Star 1" width={400} height={512}/>
-        }
-        {
-          guesses[1] == "" && guesses[0] != "" &&
-          <Image id='pixel2' src={pixel2} alt="Star 2" width={400} height={512} hidden={true}/>
-        }
-        {
-          guesses[2] == "" && guesses[1] != "" &&
-          <Image id='pixel3' src={pixel3} alt="Star 3" width={400} height={512} hidden={true}/>
-        }
-        {
-          guesses[3] == "" && guesses[2] != "" &&
-          <Image id='pixel4' src={pixel4} alt="Star 4" width={400} height={512} hidden={true}/>
-        }
-        {
-          guesses[4] == "" && guesses[3] != "" &&
-          <Image id='pixel5' src={pixel5} alt="Star 5" width={400} height={512} hidden={true}/>
-        }
-        {
-          guesses[5] == "" && guesses[4] != "" &&
-          <Image id='pixel6' src={pixel6} alt="Star 6" width={400} height={512} hidden={true}/> 
-        }
-        </div>
-        <div className={styles.input}>
-          <label>Who&apos;s The Star?</label>
-          
-          <input id='celebInput' onKeyDown={onInputEnter} placeholder='Type Celebrities Name Here'></input>
-          <button onClick={() => onGuessSubmit()}>SUBMIT</button>
-          <button onClick={() => skip()}>SKIP</button>
-          
-          
-        </div>
-
-        <div className={styles.guess}>
-          <span>{guesses[0]}</span>
-          { guesses[0] != "" &&
-            <div className={styles.divIcon}>
-            <Image src="/images/xmark.png" width={24} height={24}></Image>
-            </div>
-          }
-        </div>
-        <div className={styles.guess}>
-          <span>{guesses[1]}</span>
-          { guesses[1] != "" &&
-            <div className={styles.divIcon}>
-            <Image src="/images/xmark.png" width={24} height={24}></Image>
-            </div>
-          }
-        </div>
-        <div className={styles.guess}>
-          <span>{guesses[2]}</span>
-          { guesses[2] != "" &&
-            <div className={styles.divIcon}>
-            <Image src="/images/xmark.png" width={24} height={24}></Image>
-            </div>
-          }
-        </div>
-        <div className={styles.guess}>
-          <span>{guesses[3]}</span>
-          { guesses[3] != "" &&
-            <div className={styles.divIcon}>
-            <Image src="/images/xmark.png" width={24} height={24}></Image>
-            </div>
-          }
-        </div>
-        <div className={styles.guess}>
-          <span>{guesses[4]}</span>
-          { guesses[4] != "" &&
-            <div className={styles.divIcon}>
-            <Image src="/images/xmark.png" width={24} height={24}></Image>
-            </div>
-          }
-        </div>
-        <div className={styles.guess}>
-          <span>{guesses[5]}</span>
-          { guesses[5] != "" &&
-            <div className={styles.divIcon}>
-            <Image src="/images/xmark.png" width={24} height={24}></Image>
-            </div>
-          }
-        </div>
+        <Guess guesses={guesses} guessFunction={onGuessSubmit} onNumber={7}/>
         
       </main>
 
@@ -412,37 +292,10 @@ export default function Home({
 
 export const getStaticProps: GetStaticProps = async () => {
   
-  var res = await fetch('https://developers.buymeacoffee.com/api/v1/supporters?all',{
-    
-    method:'GET',
-    cache:'no-cache',
-    headers: new Headers({
-      'Accept':'application/json',
-      'Content-Type':'application/json',
-      "Authorization": "Bearer "+process.env.BUY_ME_A_COFFEE_READ,
-      "User-Agent":"Stardle"
-    })
-  }).then(data => data.json()).catch(reason =>{
-    console.log("Could not load Supporters: "+reason);
-    return JSON.parse('{"current_page":1,"data":[{"support_id":1926541,"support_note":null,"support_coffees":1,"transaction_id":"pi_3KijqzJEtINljGAa0oi0QfBN","support_visibility":1,"support_created_on":"2022-03-29 18:33:19","support_updated_on":"2022-03-29 18:33:19","transfer_id":null,"supporter_name":"Matthew Berry","support_coffee_price":"5.0000","support_email":null,"is_refunded":null,"support_currency":"USD","referer":"https:\/\/www.stardle.app\/","country":"US","order_payload":null,"support_hidden":0,"payer_email":"matthewberry160@yahoo.com","payment_platform":"stripe","payer_name":"Matthew"}],"first_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","next_page_url":null,"path":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters","per_page":5,"prev_page_url":null,"to":1,"total":1}');
-  });
-
-  //var res = JSON.parse('{"current_page":1,"data":[{"support_id":1926541,"support_note":null,"support_coffees":1,"transaction_id":"pi_3KijqzJEtINljGAa0oi0QfBN","support_visibility":1,"support_created_on":"2022-03-29 18:33:19","support_updated_on":"2022-03-29 18:33:19","transfer_id":null,"supporter_name":"Matthew","support_coffee_price":"5.0000","support_email":null,"is_refunded":null,"support_currency":"USD","referer":"https:\/\/www.stardle.app\/","country":"US","order_payload":null,"support_hidden":0,"payer_email":"matthewberry160@yahoo.com","payment_platform":"stripe","payer_name":"Matthew"}],"first_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters?page=1","next_page_url":null,"path":"https:\/\/developers.buymeacoffee.com\/api\/v1\/supporters","per_page":5,"prev_page_url":null,"to":1,"total":1}');
-
-  var names = "";
-  res.data.forEach((element: { supporter_name: string; support_coffee_price: string }) => {
-  
-      
-    
-    const price = parseFloat(element.support_coffee_price);
-    names+="|"+element.supporter_name+": $"+Math.round(price)+"|";
-    names +=" ";
-  });
 
 
   console.log("Getting Static Props Index");
   const imageData = getImageData();
-  imageData.coffeeNames = names;
   return {
     props:  imageData,
     revalidate:60
