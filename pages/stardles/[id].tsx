@@ -3,18 +3,15 @@ import Image from 'next/image'
 import {useRouter} from 'next/router'
 import React, {useState,useEffect, KeyboardEventHandler} from 'react'
 import styles from '../styles/Home.module.css'
-import Layout from '../components/layout'
-import { GetStaticProps,GetServerSideProps } from 'next'
-import {getImageData} from '../lib/stars'
-
-import { InputType } from 'zlib'
-import { bool } from 'prop-types'
+import Layout from '../../components/layout'
+import { GetStaticProps,GetServerSideProps, GetStaticPaths } from 'next'
+import {getAllStardleIds, getStardleData} from '../../lib/histories'
 import {getCookie, setCookies} from 'cookies-next'
 import { CookieValueTypes } from 'cookies-next/lib/types'
-import Link from 'next/link'
-import * as ga from '../lib/ga/index'
-import Guess from '../components/guess'
-import Images from '../components/images'
+import * as ga from '../../lib/ga/index'
+import Guess from '../../components/guess'
+import Images from '../../components/images'
+import { ParsedUrlQuery } from 'querystring'
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -22,7 +19,7 @@ function isString(cookie: CookieValueTypes):cookie is string{
   return (cookie as string) !== undefined;
 }
 
-export default function Home({
+export default function History({
         starPath,
         pixels,
         names,
@@ -289,19 +286,30 @@ export default function Home({
     </Layout>
   )
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  
-
-
-  console.log("Getting Static Props Index");
-  const imageData = getImageData();
+export const getStaticPaths:GetStaticPaths = async ()=>{
+  const paths = getAllStardleIds();
   return {
-    props:  imageData,
-    revalidate:60
-    
-      
-    
+    paths,
+    fallback: false
+  }
+}
+interface IParams extends ParsedUrlQuery{
+  id:string
+}
+export const getStaticProps: GetStaticProps = async (context) => {
+  
+  const {params} = context.params as IParams;
+
+  const postData = getStardleData(params as string) as {  
+    starPath:string,
+    pixels:string[],
+    names:string[],
+    dateStr:string,
+    stardleNumber:string}
+  return {
+    props: {
+      postData
+    }
   }
   
 }

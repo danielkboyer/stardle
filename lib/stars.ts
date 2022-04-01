@@ -33,12 +33,8 @@ export function getImageData(){
     const dateStr = year+""+month+""+day;
     const dayPath = "/images/"+year+month+day+"/";
     const starPath = dayPath+"star.jpg";
-    const pixel1 = dayPath+"1.jpg";
-    const pixel2 = dayPath+"2.jpg";
-    const pixel3 = dayPath+"3.jpg";
-    const pixel4 = dayPath+"4.jpg";
-    const pixel5 = dayPath+"5.jpg";
-    const pixel6 = dayPath+"6.jpg";
+    const pixels = [dayPath+"1.jpg",dayPath+"2.jpg",dayPath+"3.jpg",dayPath+"4.jpg",dayPath+"5.jpg",dayPath+"6.jpg"];
+   
     const fullPath = path.join(dayDirectory,dayPath+"name.txt");
     const numberPath = path.join(dayDirectory,dayPath+"number.txt");
     const starName = fs.readFileSync(fullPath,'utf-8');
@@ -48,12 +44,7 @@ export function getImageData(){
     return {
       
         starPath:starPath,
-        pixel1:pixel1,
-        pixel2:pixel2,
-        pixel3:pixel3,
-        pixel4:pixel4,
-        pixel5:pixel5,
-        pixel6:pixel6,
+        pixels:pixels,
         names:names,
         dateStr:dateStr,
         stardleNumber:number

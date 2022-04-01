@@ -158,7 +158,7 @@ function Finished({
     
     
     <Layout>
-        <div className={Styles.main}>
+        <div className={Styles.container}>
         <Image src={starPath} width={400} height={512}></Image>
         <div className={Styles.name}>{names != null && names[0]}</div>
         {won == true &&
@@ -176,6 +176,7 @@ function Finished({
             <div className={Styles.dash+" "+ div5Style}></div>
             <div className={Styles.dash+" "+ div6Style}></div>
         </div>
+        <History></History>
         <div className={Styles.timer}>
             <span>Next Stardle</span>
             <div id='myTimer'>
