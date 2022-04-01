@@ -281,7 +281,7 @@ export default function Home({
         <Images guesses={guesses} pixels={pixels}/> 
        
 
-        <Guess guesses={guesses} guessFunction={onGuessSubmit} />
+        <Guess guesses={guesses} guessFunction={onGuessSubmit} onNumber={7}/>
         
       </main>
 

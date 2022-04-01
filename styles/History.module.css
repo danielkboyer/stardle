@@ -10,3 +10,11 @@
   .container {
     padding: 0 2rem;
   }
+  .wantMore{
+    color: blue;
+}
+
+.title{
+  margin: 0;
+  padding: 0;
+}

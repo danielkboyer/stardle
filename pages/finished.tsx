@@ -52,7 +52,13 @@ function Finished({
             return;
         }
 
-        document.getElementById("myTimer")!.innerHTML = data
+        var timer = document.getElementById("myTimer");
+        if(timer == null){
+            clearInterval(interval);
+            return;
+        }
+
+        timer.innerHTML = data;
     }
 
     const clickTwitter = () =>{
@@ -70,7 +76,14 @@ function Finished({
             }
           })
     }
-
+    function playMore(){
+        clearInterval(interval);
+        ga.event({
+            action: "play_prev_"+prevNumber,
+            params : {
+            }
+          })
+    }
     const interval = setInterval(() => {
 
         var now = new Date().getTime();
@@ -107,8 +120,8 @@ function Finished({
             <div className={Styles.desc}>You didn&apos;t get todays Stardle... Try again tommorow.</div>
         }
         
-        <Link href={`/stardles/${prevNumber}`}>
-            <a>{"Want more? Play Yesterdays Stardle"}</a>
+        <Link  href={`/stardles/${prevNumber}`}>
+            <a onClick={playMore} className={Styles.wantMore}>{"Want more? Play Yesterdays Stardle"}</a>
         </Link>
         <div className={Styles.timer}>
             <span>Next Stardle</span>
@@ -149,6 +162,8 @@ function Finished({
 }
 
 export default Finished
+
+
 
 // export const getStaticProps: GetStaticProps = async () => {
   

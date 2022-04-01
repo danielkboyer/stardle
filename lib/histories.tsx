@@ -51,10 +51,14 @@ export function getAllStardleIds() {
     
     var numberPath = path.join(dayDirectory,dayPath+"number.txt");
     var number = parseInt(fs.readFileSync(numberPath,'utf-8'));
-    dateObj.setDate(dateObj.getUTCDate() - (number-parseInt(id)));
-    dateObj.getUTCMonth() + 1;
+    console.log(`DateObj date ${dateObj.getUTCDate()} - (${number} - ${parseInt(id)})`);
+  
+    dateObj.setUTCDate(dateObj.getUTCDate() - (number-parseInt(id)));
+
+    month = dateObj.getUTCMonth() + 1;
     day = dateObj.getUTCDate();
     year = dateObj.getUTCFullYear();
+    
     dateStr = year+""+month+""+day;
     dayPath = "/images/"+year+month+day+"/";
 

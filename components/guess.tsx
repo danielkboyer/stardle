@@ -5,10 +5,12 @@ import styles from '../components/guess.module.css'
 
 export default function Guess({
         guesses,
-        guessFunction
+        guessFunction,
+        onNumber
 }:{
       guesses:string[],
-      guessFunction:(celebName:string)=>void
+      guessFunction:(celebName:string)=>void,
+      onNumber:number
   
 }){
   
@@ -62,7 +64,7 @@ export default function Guess({
 
         <div className={styles.guess}>
           <span>{guesses[0]}</span>
-          { guesses[0] != "" &&
+          { guesses[0] != "" && onNumber != 0 &&
             <div className={styles.divIcon}>
             <Image src="/images/xmark.png" width={24} height={24}></Image>
             </div>
@@ -70,7 +72,7 @@ export default function Guess({
         </div>
         <div className={styles.guess}>
           <span>{guesses[1]}</span>
-          { guesses[1] != "" &&
+          { guesses[1] != "" && onNumber != 1 &&
             <div className={styles.divIcon}>
             <Image src="/images/xmark.png" width={24} height={24}></Image>
             </div>
@@ -78,7 +80,7 @@ export default function Guess({
         </div>
         <div className={styles.guess}>
           <span>{guesses[2]}</span>
-          { guesses[2] != "" &&
+          { guesses[2] != "" && onNumber != 2 &&
             <div className={styles.divIcon}>
             <Image src="/images/xmark.png" width={24} height={24}></Image>
             </div>
@@ -86,7 +88,7 @@ export default function Guess({
         </div>
         <div className={styles.guess}>
           <span>{guesses[3]}</span>
-          { guesses[3] != "" &&
+          { guesses[3] != "" && onNumber != 3 &&
             <div className={styles.divIcon}>
             <Image src="/images/xmark.png" width={24} height={24}></Image>
             </div>
@@ -94,7 +96,7 @@ export default function Guess({
         </div>
         <div className={styles.guess}>
           <span>{guesses[4]}</span>
-          { guesses[4] != "" &&
+          { guesses[4] != "" && onNumber != 4 &&
             <div className={styles.divIcon}>
             <Image src="/images/xmark.png" width={24} height={24}></Image>
             </div>
@@ -102,7 +104,7 @@ export default function Guess({
         </div>
         <div className={styles.guess}>
           <span>{guesses[5]}</span>
-          { guesses[5] != "" &&
+          { guesses[5] != "" && onNumber != 5 &&
             <div className={styles.divIcon}>
             <Image src="/images/xmark.png" width={24} height={24}></Image>
             </div>

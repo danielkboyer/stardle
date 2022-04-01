@@ -42,7 +42,6 @@ export default function History({
   stardleNumber ${stardleNumber}`);
 
   var prevNumber = (parseInt(stardleNumber)-1).toString();
-  const[shareMessage,setShareMessage] = useState("But like you didn't finish yet....");
   const[solved,setSolved] = useState(false);
   const[won,setWon] = useState(false);
   const[guesses, setGuesses] = useState(["","","","","",""]);
@@ -93,8 +92,8 @@ export default function History({
 
     if(guessedCorrect){
       console.log("Correct");
-      setSolved(true);
       setWon(true);
+      setSolved(true);
       localSolve = true;
       ga.event({
         action: "won_"+stardleNumber,
@@ -109,6 +108,7 @@ export default function History({
     else if(localGuesses[5] != ""){
       setWon(false);
       setSolved(true);
+      onNumberLocal = 7;
       localSolve = true;
       ga.event({
         action: "lost_"+stardleNumber,
@@ -131,6 +131,12 @@ export default function History({
     setSolved(false);
     setWon(false);
     setGuesses(["","","","","",""]);
+
+    ga.event({
+      action: "play_prev_"+stardleNumber,
+      params : {
+      }
+    })
   }
   return (
     
@@ -139,20 +145,29 @@ export default function History({
     <div className={styles.container}>
 
       <main className={styles.main}>
-
+        {!solved &&
         <Images guesses={guesses} pixels={pixels}/> 
-       
+        }
+        {solved &&
+        <Image src={starPath} width={400} height={512}></Image>
+        }
+        <label className={styles.title}>{"Stardle #"+stardleNumber}</label>
+        {solved &&
+        <h2 className={styles.title}>{names[0]}</h2>
+        }
+       {parseInt(prevNumber) > 0 &&
         <Link href={`/stardles/${prevNumber}`}>
-            <a onClick={resetVariables}>{"More?! Go Yesterday Again."}</a>
+            <a className={styles.wantMore} onClick={resetVariables}>{"More?! Go Yesterday Again."}</a>
         </Link>
-        {(won || solved) &&
+      }
+        {(solved) &&
         <Share  
         number={onNumber}
         guesses={guesses}
         won={won}
         stardleNumber={stardleNumber}
         />}
-        <Guess guesses={guesses} guessFunction={onGuessSubmit} />
+        <Guess guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
         
       </main>
 

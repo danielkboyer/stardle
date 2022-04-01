@@ -14,8 +14,9 @@ function Share({ number, guesses, won,stardleNumber }:
       stardleNumber:string
     }) {
     
+    const router = useRouter();
     var shareMessage = getShareMessage(number,guesses,won,stardleNumber);
-    let url = "https://www.stardle.app";
+    let url = router.asPath;
     //console.log("url: "+url);
     const shareDetails = { url, title:shareMessage, text:shareMessage };
     
