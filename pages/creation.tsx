@@ -2,18 +2,18 @@
 import Image from 'next/image'
 import {useRouter} from 'next/router'
 import React, {useState,useEffect, KeyboardEventHandler} from 'react'
-import styles from '../../styles/History.module.css';
-import Layout from '../../components/layout'
+import styles from '../styles/History.module.css';
+import Layout from '../components/layout'
 import { GetStaticProps,GetServerSideProps, GetStaticPaths } from 'next'
-import {getAllStardleIds, getStardleData} from '../../lib/histories'
 import {getCookie, setCookies} from 'cookies-next'
 import { CookieValueTypes } from 'cookies-next/lib/types'
-import * as ga from '../../lib/ga/index'
-import Guess from '../../components/guess'
-import Images from '../../components/images'
+import * as ga from '../lib/ga/index'
+import Guess from '../components/guess'
+import Images from '../components/images'
 import { ParsedUrlQuery } from 'querystring'
 import Link from 'next/link';
-import Share from '../../components/share';
+import Share from '../components/share';
+import { getStardleData } from '../lib/creator';
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -21,7 +21,7 @@ function isString(cookie: CookieValueTypes):cookie is string{
   return (cookie as string) !== undefined;
 }
 
-export default function History({
+export default function Creation({
         starPath,
         pixels,
         names,
@@ -79,14 +79,7 @@ export default function History({
         console.log("Set Guesses");
 
         onNumberLocal = x+1;
-        ga.event({
-          action: "guess_"+stardleNumber,
-          params : {
-            guessNumber: x+1,
-            guess:celebName,
-            celebrity:names[0],
-          }
-        })
+     
         break;
       }
     }
@@ -97,14 +90,7 @@ export default function History({
       setWon(true);
       setSolved(true);
       localSolve = true;
-      ga.event({
-        action: "won_"+stardleNumber,
-        params : {
-          guessNumber: onNumber,
-          guess:celebName,
-          celebrity:names[0],
-        }
-      })
+      
 
     }
     else if(localGuesses[5] != ""){
@@ -112,13 +98,7 @@ export default function History({
       setSolved(true);
       onNumberLocal = 7;
       localSolve = true;
-      ga.event({
-        action: "lost_"+stardleNumber,
-        params : {
-          guess:celebName,
-          celebrity:names[0]
-        }
-      })
+    
     }
 
     if(localSolve){
@@ -133,12 +113,6 @@ export default function History({
     setSolved(false);
     setWon(false);
     setGuesses(["","","","","",""]);
-
-    ga.event({
-      action: "play_prev_"+stardleNumber,
-      params : {
-      }
-    })
   }
   return (
     
@@ -177,39 +151,29 @@ export default function History({
     </Layout>
   )
 }
-export const getStaticPaths:GetStaticPaths = async ()=>{
-  const paths = getAllStardleIds();
-  console.log("Static Paths: "+paths);
-  return {
-    paths,
-    fallback: false
-  }
-}
+
 interface IParams extends ParsedUrlQuery{
   id:string
 }
-export const getStaticProps: GetStaticProps = async (context) => {
+
+
+export const getServerSideProps: GetServerSideProps = async () => {
   
-  console.log(context);
-  const params = context.params as IParams;
-  console.log(params);
-  const postData = getStardleData(params.id) as {  
-    starPath:string,
-    pixels:string[],
-    names:string[],
-    dateStr:string,
-    stardleNumber:string,
-  originalNumber:number}
-    console.log(postData);
-  return {
-    props:  postData,
-    revalidate: 60
-    
+
+
+    const postData = getStardleData("6") as {  
+      starPath:string,
+      pixels:string[],
+      names:string[],
+      dateStr:string,
+      stardleNumber:string,
+        originalNumber:number}
+      console.log(postData);
+    return {
+      props:  postData
+      
+      
+    }
     
   }
   
-}
-
-
-
-

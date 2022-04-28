@@ -1,46 +1,27 @@
-
-import {getImageData} from '../lib/stars'
 import fs from 'fs'
+import { responseSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
 import path from 'path'
-
 const dayDirectory = path.join(process.cwd(),'public')
 
-
-export function getAllStardleIds() {
-
-    const imageData = getImageData();
-    
-    // Returns an array that looks like this:
-    // [
-    //   {
-    //     params: {
-    //       id: 'ssg-ssr'
-    //     }
-    //   },
-    //   {
-    //     params: {
-    //       id: 'pre-rendering'
-    //     }
-    //   }
-    // ]
-    var numbers = [];
-    console.log("Stardle Number:"+imageData.stardleNumber)
-    for(var x = 1;x<= parseInt(imageData.stardleNumber);x++){
-      numbers.push(x);
+var AWS = require('aws-sdk')
+AWS.config.update(
+    {
+      accessKeyId: ".. your key ..",
+      secretAccessKey: ".. your secret key ..",
     }
-    console.log("Numbers: "+numbers);
-    return numbers.map(number => {
-      return {
-        params: {
-          id: number.toString()
-        }
-      }
-    })
-  }
+  );
+const s3 = AWS.s3();
+export async function getNames(){
+    const params = {Bucket:'stardlebucket',Key:'names.txt'};
+    const response = await s3.getObject(params).promise();
+    const fileContent = response.Body.toString('utf-8');
+    
+    return fileContent;
+}
+export function getStardleData(id:string) {
 
-
-  export function getStardleData(id:string) {
-
+    var namesFile = getNames();
+    console.log(namesFile);
     const dateObj = new Date();
     dateObj.setHours(dateObj.getHours() - 6);
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
