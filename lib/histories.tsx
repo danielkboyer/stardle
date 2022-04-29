@@ -78,7 +78,8 @@ export function getAllStardleIds() {
         pixels:pixels,
         names:names,
         dateStr:dateStr,
-        stardleNumber:id
+        stardleNumber:id,
+        originalNumber:number
 
       
       

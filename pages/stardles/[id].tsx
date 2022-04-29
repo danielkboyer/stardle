@@ -26,13 +26,15 @@ export default function History({
         pixels,
         names,
         dateStr,
-        stardleNumber
+        stardleNumber,
+        originalNumber
 }:{
         starPath:string,
         pixels:string[]
         names:string[],
         dateStr:string,
-        stardleNumber:string
+        stardleNumber:string,
+        originalNumber:number
   
 }){
   console.log(`Received StarPath: ${starPath}\n
@@ -155,7 +157,7 @@ export default function History({
         {solved &&
         <h2 className={styles.title}>{names[0]}</h2>
         }
-       {parseInt(prevNumber) > 0 &&
+       {parseInt(prevNumber) > 0 && originalNumber -3 <= parseInt(prevNumber) &&
         <Link href={`/stardles/${prevNumber}`}>
             <a className={styles.wantMore} onClick={resetVariables}>{"More?! Go Yesterday Again."}</a>
         </Link>
@@ -196,7 +198,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     pixels:string[],
     names:string[],
     dateStr:string,
-    stardleNumber:string}
+    stardleNumber:string,
+  originalNumber:number}
     console.log(postData);
   return {
     props:  postData,
