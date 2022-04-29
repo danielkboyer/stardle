@@ -1,8 +1,8 @@
 
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../components/guess.module.css'
-
+import Select from "react-select";
 export default function Guess({
         guesses,
         guessFunction,
@@ -15,15 +15,35 @@ export default function Guess({
 }){
   
  
-  
-  const onInputEnter = (e:React.KeyboardEvent<HTMLInputElement>) =>{
-    console.log(e);
+  const[menuOpen,setMenuOpen] = useState(false);
+  const[selectedOption,setSelectedOption] = useState({value:"",label:""});
+  // const onKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) =>{
+  //   console.log(e);
     
-    if(e.key == "Enter"){
-      onGuessSubmit();
+  //   if(e.key == "Enter"){
+  //     onGuessSubmit();
+  //   }
+  // }
+
+  const onInputChange = (newValue: string) =>{
+    console.log(newValue);
+    if(newValue === "" || newValue === undefined){
+        setMenuOpen(false)
+        setSelectedOption({value:"",label:""})
+    }
+    else{
+      setMenuOpen(true);
+      setSelectedOption({value:newValue,label:newValue})
     }
   }
 
+
+  const onSelectChange = (e:string|undefined)=>{
+    if(e === undefined)
+      return;
+    console.log("did it"+e);
+    setSelectedOption({value:e,label:e})
+  }
   const skip = () =>{
     var element  = document.getElementById("celebInput");
     if(!(element instanceof HTMLInputElement))
@@ -36,32 +56,47 @@ export default function Guess({
   const onGuessSubmit = () => {
 
     //retrieve input data
-    var element  = document.getElementById("celebInput");
-    if(!(element instanceof HTMLInputElement))
-      throw new Error('Expected element to be an HTMLScriptELement, was ${element && element.constructor && element.constructor.name || element}');
-    var celebName = element.value;
-    element.value = "";
+    
+    console.log(selectedOption)
+    var celebName = selectedOption.value
 
     if(celebName == "")
       return;
 
     guessFunction(celebName);
-   
+    
+    setSelectedOption({value:"",label:""});
 
   };
+
+  const onSelect = () =>{
+
+  };
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
   return (
     <div className={styles.main}>
 
         <div className={styles.input}>
           <label>Who&apos;s The Star?</label>
           
-          <input id='celebInput' onKeyDown={onInputEnter} placeholder='Type Celebrities Name Here'></input>
+          <Select id="celebInput"  onChange={(e)=>{
+            onSelectChange(e?.label);
+          }} className={styles.select} options={options} onInputChange={onInputChange} menuIsOpen={menuOpen} placeholder="Type Celebrities Name Here" components={{
+            
+            DropdownIndicator:()=>null,
+            IndicatorSeparator:()=>null,
+          }} />
+          
           <button onClick={() => onGuessSubmit()}>SUBMIT</button>
           <button onClick={() => skip()}>SKIP</button>
           
           
         </div>
-
+       
         <div className={styles.guess}>
           <span>{guesses[0]}</span>
           { guesses[0] != "" && onNumber != 0 &&

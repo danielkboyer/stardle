@@ -6,11 +6,11 @@ const dayDirectory = path.join(process.cwd(),'public')
 var AWS = require('aws-sdk')
 AWS.config.update(
     {
-      accessKeyId: ".. your key ..",
-      secretAccessKey: ".. your secret key ..",
+      accessKeyId: "AKIASQVOOYCJV6J3QIYM",
+      secretAccessKey: "1DnuaJQprhuQNjxUlwQQyc+tkXBNhewE5OFABqfZ",
     }
   );
-const s3 = AWS.s3();
+const s3 = new AWS.S3();
 export async function getNames(){
     const params = {Bucket:'stardlebucket',Key:'names.txt'};
     const response = await s3.getObject(params).promise();
@@ -18,49 +18,82 @@ export async function getNames(){
     
     return fileContent;
 }
-export function getStardleData(id:string) {
 
-    var namesFile = getNames();
-    console.log(namesFile);
-    const dateObj = new Date();
-    dateObj.setHours(dateObj.getHours() - 6);
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    var dateStr = year+""+month+""+day;
-    var dayPath = "/images/"+year+month+day+"/";
-    
-    var numberPath = path.join(dayDirectory,dayPath+"number.txt");
-    var number = parseInt(fs.readFileSync(numberPath,'utf-8'));
-    console.log(`DateObj date ${dateObj.getUTCDate()} - (${number} - ${parseInt(id)})`);
-  
-    dateObj.setUTCDate(dateObj.getUTCDate() - (number-parseInt(id)));
+export async function getRandomStar():Promise<{index:string,name:string} | undefined>{
+  let names = (await getNames()).split('\n');
+  let toChoose = [];
 
-    month = dateObj.getUTCMonth() + 1;
-    day = dateObj.getUTCDate();
-    year = dateObj.getUTCFullYear();
-    
-    dateStr = year+""+month+""+day;
-    dayPath = "/images/"+year+month+day+"/";
+  let maxCount = 10;
+  for(let x = 0;x<names.length;x++){
+    if(names[x][0] === '1'){
+      continue;
+    }
+    if(names[x][2] === '0'){
+      continue;
+    }
+    console.log(`Pushing ${names[x]}`)
+    toChoose.push(names[x].trim());
+    if(toChoose.length >= maxCount){
+      break;
+    }
+  }
 
-    const starPath = dayPath+"star.jpg";
-    const pixels = [dayPath+"1.jpg",dayPath+"2.jpg",dayPath+"3.jpg",dayPath+"4.jpg",dayPath+"5.jpg",dayPath+"6.jpg"];
+  let randomInt = Math.floor(Math.random() * toChoose.length);
+  console.log(`Returning: ${toChoose[randomInt]}`);
+  return {
+    index:toChoose[randomInt][4],
+    name:toChoose[randomInt].substring(6)
+  }
+}
+
+
+
+
+
+export async function getStardleData(id:string) {
+
+    var randomStar = await getRandomStar();
+    console.log(`Random star: ${randomStar?.name}`)
+    if(randomStar === undefined){
+      console.log("Could not retrieve random star, this should never happen");
+      return {
+        starPath:"",
+        pixels:[],
+        names:["FAILED"]
+      }
+    }
    
-    const fullPath = path.join(dayDirectory,dayPath+"name.txt");
-    numberPath = path.join(dayDirectory,dayPath+"number.txt");
-    console.log(fullPath);
-    const starName = fs.readFileSync(fullPath,'utf-8');
-    const names = starName.split(/\r?\n/);
+    let pixels = [];
+    let names = [];
 
+
+    const fileName = `${randomStar.name}/${randomStar.index}/star.jpg`;
+    //five minute url, this is okay because only I will be using this.
+    const signedUrlExpireSeconds = 5* 60 *1;
+    const starPath = await s3.getSignedUrl('getObject',{
+      Bucket: "stardlebucket",
+      Key:fileName,
+      Expires:signedUrlExpireSeconds
+    });
+
+    for(let x = 1;x<7;x++){
+      const fileName = `${randomStar.name}/${randomStar.index}/${x}.jpg`;
+      const signedUrlExpireSeconds = 60 *1;
+      const url = await s3.getSignedUrl('getObject',{
+        Bucket: "stardlebucket",
+        Key:fileName,
+        Expires:signedUrlExpireSeconds
+      });
+      pixels.push(url);
+    }
+
+    names.push(randomStar.name);
 
     return {
       
         starPath:starPath,
         pixels:pixels,
         names:names,
-        dateStr:dateStr,
-        stardleNumber:id,
-        originalNumber:number
 
       
       

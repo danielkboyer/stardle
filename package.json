@@ -23,6 +23,7 @@
     "react-chartjs-2": "^4.0.1",
     "react-dom": "17.0.2",
     "react-modal": "^3.14.4",
+    "react-select": "^5.3.1",
     "rxjs": "^7.3.0",
     "swr": "^1.2.2"
   },

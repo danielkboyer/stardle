@@ -25,25 +25,16 @@ export default function Creation({
         starPath,
         pixels,
         names,
-        dateStr,
-        stardleNumber,
-        originalNumber
 }:{
         starPath:string,
         pixels:string[]
         names:string[],
-        dateStr:string,
-        stardleNumber:string,
-        originalNumber:number
   
 }){
   console.log(`Received StarPath: ${starPath}\n
   pixels ${pixels}\n
-  names ${names}\n
-  dateStr ${dateStr}\n
-  stardleNumber ${stardleNumber}`);
+  names ${names}\n`);
 
-  var prevNumber = (parseInt(stardleNumber)-1).toString();
   const[solved,setSolved] = useState(false);
   const[won,setWon] = useState(false);
   const[guesses, setGuesses] = useState(["","","","","",""]);
@@ -127,22 +118,10 @@ export default function Creation({
         {solved &&
         <Image src={starPath} width={400} height={512}></Image>
         }
-        <label className={styles.title}>{"Stardle #"+stardleNumber}</label>
         {solved &&
         <h2 className={styles.title}>{names[0]}</h2>
         }
-       {parseInt(prevNumber) > 0 && originalNumber -3 <= parseInt(prevNumber) &&
-        <Link href={`/stardles/${prevNumber}`}>
-            <a className={styles.wantMore} onClick={resetVariables}>{"More?! Go Yesterday Again."}</a>
-        </Link>
-      }
-        {(solved) &&
-        <Share  
-        number={onNumber}
-        guesses={guesses}
-        won={won}
-        stardleNumber={stardleNumber}
-        />}
+       
         <Guess guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
         
       </main>
@@ -161,12 +140,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
   
 
 
-    const postData = getStardleData("6") as {  
+    const postData = await getStardleData("6") as {  
       starPath:string,
       pixels:string[],
       names:string[],
-      dateStr:string,
-      stardleNumber:string,
         originalNumber:number}
       console.log(postData);
     return {
