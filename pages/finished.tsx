@@ -40,12 +40,13 @@ function Finished({
     console.log(number);
    
         var mtDate = new Date();
-        mtDate.setHours(mtDate.getUTCHours()-6);
-        mtDate.setDate(mtDate.getUTCDate()+1);
-        mtDate.setHours(0);
-        mtDate.setMinutes(0);
-        mtDate.setSeconds(0);
+        mtDate.setUTCHours(mtDate.getUTCHours()-6);
+        mtDate.setUTCDate(mtDate.getUTCDate()+1);
+        mtDate.setUTCHours(0);
+        mtDate.setUTCMinutes(0);
+        mtDate.setUTCSeconds(0);
         var countDownDate = mtDate.getTime();
+        console.log("COUNT DOWN DATE "+mtDate.toUTCString());
 
     const setTime = (data:string) =>{
         if(document == null){
@@ -86,10 +87,12 @@ function Finished({
     }
     const interval = setInterval(() => {
 
-        var now = new Date().getTime();
+        var now = new Date();
+        now.setUTCHours(now.getUTCHours()-6);
 
+        
         // Find the distance between now and the count down date
-        var distance = countDownDate - now;
+        var distance = countDownDate - now.getTime();
         
         // Time calculations for hours, minutes and seconds
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
