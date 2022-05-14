@@ -45,21 +45,28 @@ export default function Guess({
     setSelectedOption({value:e,label:e})
   }
   const skip = () =>{
-    var element  = document.getElementById("celebInput");
-    if(!(element instanceof HTMLInputElement))
-      throw new Error('Expected element to be an HTMLScriptELement, was ${element && element.constructor && element.constructor.name || element}');
-    element.value = "SKIP";
-    onGuessSubmit();
+   
+    onGuessSubmit(true);
   };
 
 
-  const onGuessSubmit = () => {
+  const onGuessSubmit = (skip:boolean = false) => {
 
     //retrieve input data
-    
-    console.log(selectedOption)
-    var celebName = selectedOption.value
+    if(!skip){
+      var dropdown = document.getElementById("celebInput");
+      if(!(dropdown instanceof HTMLDivElement)){
+        throw new Error(`Expected element to be an HTMLScriptELement, was ${dropdown && dropdown.constructor && dropdown.constructor.name || dropdown}`);
+        return;
+      }
 
+      
+      var celebName = dropdown.innerText;
+    }
+    else{
+      var celebName = "SKIP";
+    }
+    console.log(celebName)
     if(celebName == "")
       return;
 
@@ -85,7 +92,7 @@ export default function Guess({
           
           <Select id="celebInput"  onChange={(e)=>{
             onSelectChange(e?.label);
-          }} className={styles.select} options={options} onInputChange={onInputChange} menuIsOpen={menuOpen} placeholder="Type Celebrities Name Here" components={{
+          }} className={styles.select}  options={options} onInputChange={onInputChange} menuIsOpen={menuOpen} placeholder="Type Celebrities Name Here" components={{
             
             DropdownIndicator:()=>null,
             IndicatorSeparator:()=>null,
