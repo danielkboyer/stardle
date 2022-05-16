@@ -90,7 +90,7 @@ export async function getStardleData(date:string, minutes:number){
     const pixels = []
     for(let x = 1;x<7;x++){
       const fileName = `images/${date}/${x}.jpg`;
-      const signedUrlExpireSeconds = 60 *1;
+      const signedUrlExpireSeconds = minutes * 60 *1;
       const url = await s3.getSignedUrl('getObject',{
         Bucket: "stardlebucket",
         Key:fileName,
