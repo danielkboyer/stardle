@@ -24,16 +24,20 @@ function isString(cookie: CookieValueTypes):cookie is string{
 export default function Creation({
         starPath,
         pixels,
+        starName,
         names,
+        starIndex,
 }:{
         starPath:string,
         pixels:string[]
+        starName:string,
         names:string[],
+        starIndex:string,
   
 }){
   console.log(`Received StarPath: ${starPath}\n
   pixels ${pixels}\n
-  names ${names}\n`);
+  names ${starName}\n`);
 
   const[solved,setSolved] = useState(false);
   const[won,setWon] = useState(false);
@@ -50,13 +54,8 @@ export default function Creation({
     var localSolve = false;
 
     //loop through names and check if any match
-    var guessedCorrect = false;
-    for(var x = 0;x<names.length;x++){
-
-      if(names[x] == celebName.toUpperCase().trim()){
-        guessedCorrect = true;
-      }
-    }
+    var guessedCorrect = starName.toUpperCase().trim() == celebName.toUpperCase().trim();
+    
 
     
     
@@ -100,6 +99,26 @@ export default function Creation({
 
   };
 
+  function push(password:string){
+    fetch('/api/creation/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name:starName,index:starIndex,command:"PUSH",password:password}),
+    })
+  }
+
+  function skip(password:string){
+    fetch('/api/creation/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name:starName,index:starIndex,command:"SKIP",password:password}),
+    })
+  }
+
   function resetVariables() {
     setSolved(false);
     setWon(false);
@@ -119,10 +138,9 @@ export default function Creation({
         <Image src={starPath} width={400} height={512}></Image>
         }
         {solved &&
-        <h2 className={styles.title}>{names[0]}</h2>
+        <h2 className={styles.title}>{starName}</h2>
         }
-       
-        <Guess guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
+        <Guess pushFunction={push} skipFunction={skip} options={names} guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
         
       </main>
 
@@ -140,11 +158,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
   
 
 
-    const postData = await getStardleData("6") as {  
+    const postData = await getStardleData() as {  
       starPath:string,
       pixels:string[],
+      starName:string,
       names:string[],
-        originalNumber:number}
+      starIndex:string}
       console.log(postData);
     return {
       props:  postData

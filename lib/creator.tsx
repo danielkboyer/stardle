@@ -19,7 +19,7 @@ export async function getNames(){
     return fileContent;
 }
 
-export async function getRandomStar():Promise<{index:string,name:string} | undefined>{
+export async function getRandomStar():Promise<{index:string,name:string,names:string[]} | undefined>{
   let names = (await getNames()).split('\n');
   let toChoose = [];
 
@@ -31,18 +31,23 @@ export async function getRandomStar():Promise<{index:string,name:string} | undef
     if(names[x][2] === '0'){
       continue;
     }
+    
+    if(toChoose.length >= maxCount){
+      continue;
+    }
     console.log(`Pushing ${names[x]}`)
     toChoose.push(names[x].trim());
-    if(toChoose.length >= maxCount){
-      break;
-    }
+  }
+  for(let x = 0;x<names.length;x++){
+    names[x] = names[x].substring(6);
   }
 
   let randomInt = Math.floor(Math.random() * toChoose.length);
   console.log(`Returning: ${toChoose[randomInt]}`);
   return {
     index:toChoose[randomInt][4],
-    name:toChoose[randomInt].substring(6)
+    name:toChoose[randomInt].substring(6),
+    names:names,
   }
 }
 
@@ -50,10 +55,10 @@ export async function getRandomStar():Promise<{index:string,name:string} | undef
 
 
 
-export async function getStardleData(id:string) {
+export async function getStardleData() {
 
     var randomStar = await getRandomStar();
-    console.log(`Random star: ${randomStar?.name}`)
+    console.log(`Random star: ${randomStar?.name}`);
     if(randomStar === undefined){
       console.log("Could not retrieve random star, this should never happen");
       return {
@@ -64,7 +69,6 @@ export async function getStardleData(id:string) {
     }
    
     let pixels = [];
-    let names = [];
 
 
     const fileName = `${randomStar.name}/${randomStar.index}/star.jpg`;
@@ -87,13 +91,16 @@ export async function getStardleData(id:string) {
       pixels.push(url);
     }
 
-    names.push(randomStar.name);
 
     return {
       
         starPath:starPath,
         pixels:pixels,
-        names:names,
+        starName:randomStar.name,
+        names:randomStar.names,
+        starIndex:randomStar.index,
+
+
 
       
       

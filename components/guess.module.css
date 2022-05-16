@@ -1,9 +1,12 @@
 .input {
-    margin-top: 1rem;
+    margin-top: .3rem;
     float: left;
     min-width: 250px;
+    display:flex;
   }
-  
+  .creation{
+    display:flex;
+  }
   .input button{
     background-color: var(--stardle_blue);
     color: white;
@@ -13,14 +16,16 @@
     border-radius: .1rem;
     font-family: inherit;
   }
-  .input label{
+ .label{
     font-family: inherit;
     display: block;
     color: var(--stardle_blue);
     font-size: 1.2rem;
     line-height: 1rem;
-    padding: .1rem;
     font-weight: bold;
+    justify-content: left;
+    margin-right: auto;
+    margin-top: 1rem;
   }
   
 .main {

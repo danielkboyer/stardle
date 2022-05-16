@@ -5,7 +5,7 @@ import React, {useState,useEffect, KeyboardEventHandler} from 'react'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout'
 import { GetStaticProps,GetServerSideProps } from 'next'
-import {getImageData} from '../lib/stars'
+import {getDate,getStardleData} from '../lib/stars'
 
 import { InputType } from 'zlib'
 import { bool } from 'prop-types'
@@ -23,20 +23,20 @@ function isString(cookie: CookieValueTypes):cookie is string{
 }
 
 export default function Home({
+        starName,
         starPath,
         pixels,
+        stardleNumber,
         names,
-        dateStr,
-        stardleNumber
 }:{
+        starName:string,
         starPath:string,
-        pixels:string[]
+        pixels:string[],
+        stardleNumber:string,
         names:string[],
-        dateStr:string,
-        stardleNumber:string
   
 }){
-  
+  const dateStr = getDate();
   const router = useRouter();
  
   const hideImageClass = styles.hide;
@@ -98,12 +98,12 @@ export default function Home({
       
       query:{
           starPath:starPath,
-          names:names,
+          starName:starName,
           won:won,
           stardleNumber:stardleNumber,
           guesses:localGuesses,
           guessNumber: guessNumber
-        
+
       }
       
     },{
@@ -143,6 +143,7 @@ export default function Home({
     }
 
     //we need to find out if they solved yesterday which tells us if we keep there current streak going
+    //todo add yesterday cookie and make sure it's compatible with cookies before
     var solvedYesterday = false;
     var yesterdayCookie = getCookie("won"+dateStr);
     if(isBool(yesterdayCookie)){
@@ -192,13 +193,7 @@ export default function Home({
     var localSolve = false;
 
     //loop through names and check if any match
-    var guessedCorrect = false;
-    for(var x = 0;x<names.length;x++){
-      //console.log(names[x]);
-      if(names[x] == celebName.toUpperCase().trim()){
-        guessedCorrect = true;
-      }
-    }
+    var guessedCorrect = starName.toUpperCase().trim() === celebName.toUpperCase().trim();
 
     
     
@@ -281,7 +276,7 @@ export default function Home({
         <Images guesses={guesses} pixels={pixels}/> 
        
 
-        <Guess guesses={guesses} guessFunction={onGuessSubmit} onNumber={7}/>
+        <Guess options={names} skipFunction={undefined} pushFunction={undefined} guesses={guesses} guessFunction={onGuessSubmit} onNumber={7}/>
         
       </main>
 
@@ -295,7 +290,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 
   console.log("Getting Static Props Index");
-  const imageData = getImageData();
+  const imageData = await getStardleData(getDate() as string,60*24);
   return {
     props:  imageData,
     revalidate:60

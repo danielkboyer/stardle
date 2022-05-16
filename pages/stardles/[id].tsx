@@ -5,7 +5,7 @@ import React, {useState,useEffect, KeyboardEventHandler} from 'react'
 import styles from '../../styles/History.module.css';
 import Layout from '../../components/layout'
 import { GetStaticProps,GetServerSideProps, GetStaticPaths } from 'next'
-import {getAllStardleIds, getStardleData} from '../../lib/histories'
+import {getAllStardleIds} from '../../lib/histories'
 import {getCookie, setCookies} from 'cookies-next'
 import { CookieValueTypes } from 'cookies-next/lib/types'
 import * as ga from '../../lib/ga/index'
@@ -14,6 +14,7 @@ import Images from '../../components/images'
 import { ParsedUrlQuery } from 'querystring'
 import Link from 'next/link';
 import Share from '../../components/share';
+import { getDate, getNumber, getStardleData } from '../../lib/stars';
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -22,28 +23,28 @@ function isString(cookie: CookieValueTypes):cookie is string{
 }
 
 export default function History({
-        starPath,
-        pixels,
-        names,
-        dateStr,
-        stardleNumber,
-        originalNumber
+      starName,
+      starPath,
+      pixels,
+      stardleNumber,
+      names,
 }:{
-        starPath:string,
-        pixels:string[]
-        names:string[],
-        dateStr:string,
-        stardleNumber:string,
-        originalNumber:number
+        starName:string,
+        starPath:string
+        pixels:string[],
+        stardleNumber:number,
+        names:string[]
   
 }){
   console.log(`Received StarPath: ${starPath}\n
   pixels ${pixels}\n
-  names ${names}\n
-  dateStr ${dateStr}\n
+  names ${starName}\n
   stardleNumber ${stardleNumber}`);
 
-  var prevNumber = (parseInt(stardleNumber)-1).toString();
+  var prevNumber = stardleNumber-1
+  var originalNumber = getNumber(getDate(0,false) as Date);
+  console.log(originalNumber - stardleNumber);
+  var yesterday = getDate(originalNumber - stardleNumber+1,true);
   const[solved,setSolved] = useState(false);
   const[won,setWon] = useState(false);
   const[guesses, setGuesses] = useState(["","","","","",""]);
@@ -59,13 +60,8 @@ export default function History({
     var localSolve = false;
 
     //loop through names and check if any match
-    var guessedCorrect = false;
-    for(var x = 0;x<names.length;x++){
-
-      if(names[x] == celebName.toUpperCase().trim()){
-        guessedCorrect = true;
-      }
-    }
+    var guessedCorrect = celebName.toUpperCase().trim() === starName.toUpperCase().trim();
+ 
 
     
     
@@ -155,10 +151,10 @@ export default function History({
         }
         <label className={styles.title}>{"Stardle #"+stardleNumber}</label>
         {solved &&
-        <h2 className={styles.title}>{names[0]}</h2>
+        <h2 className={styles.title}>{starName}</h2>
         }
-       {parseInt(prevNumber) > 0 && originalNumber -3 <= parseInt(prevNumber) &&
-        <Link href={`/stardles/${prevNumber}`}>
+       {prevNumber > 0 && originalNumber -3 <= prevNumber &&
+        <Link href={`/stardles/${yesterday}`}>
             <a className={styles.wantMore} onClick={resetVariables}>{"More?! Go Yesterday Again."}</a>
         </Link>
       }
@@ -167,9 +163,9 @@ export default function History({
         number={onNumber}
         guesses={guesses}
         won={won}
-        stardleNumber={stardleNumber}
+        stardleNumber={stardleNumber.toString()}
         />}
-        <Guess guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
+        <Guess options={names} pushFunction={undefined} skipFunction={undefined} guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
         
       </main>
 
@@ -193,13 +189,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   console.log(context);
   const params = context.params as IParams;
   console.log(params);
-  const postData = getStardleData(params.id) as {  
-    starPath:string,
-    pixels:string[],
-    names:string[],
-    dateStr:string,
-    stardleNumber:string,
-  originalNumber:number}
+  const postData = await getStardleData(params.id,24*60);
     console.log(postData);
   return {
     props:  postData,

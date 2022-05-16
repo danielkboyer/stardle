@@ -7,11 +7,11 @@ import { GetStaticProps } from 'next';
 import Share from '../components/share'
 import Image from 'next/image'
 import * as ga from '../lib/ga/index'
-import { getImageData, getStarData } from '../lib/stars';
 import {useRouter, withRouter} from 'next/router'
 import {FacebookShareButton,FacebookIcon, RedditIcon, TwitterIcon} from 'next-share'
 import Link from 'next/link';
 import { getShareMessage } from '../lib/share';
+import { getDate, getNumber } from '../lib/stars';
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -25,14 +25,15 @@ function Finished({
 
     const router = useRouter();
 
-    const names = router.query.names as string[] | null;
+    const starName = router.query.starName as string[] | null;
     var guesses = router.query.guesses as string[] | null;
     if(guesses == null){
         guesses = ["","","","","",""];
     }
     const stardleNumber = router.query.stardleNumber as string;
     const prevNumber = (parseInt(stardleNumber) - 1).toString();
-    console.log(names);
+    const yesterday = getDate(1,true) as string;
+    console.log(starName);
     const starPath = router.query.starPath as string;
     const won = (router.query.won as string) == "true";
     console.log(won)
@@ -115,7 +116,7 @@ function Finished({
     <Layout>
         <div className={Styles.container}>
         <Image src={starPath} width={400} height={512}></Image>
-        <div className={Styles.name}>{names != null && names[0]}</div>
+        <div className={Styles.name}>{starName}</div>
         {won == true &&
             <div className={Styles.desc}>You Won! You Smart!</div>
         }
@@ -123,7 +124,7 @@ function Finished({
             <div className={Styles.desc}>You didn&apos;t get todays Stardle... Try again tommorow.</div>
         }
         
-        <Link  href={`/stardles/${prevNumber}`}>
+        <Link  href={`/stardles/${yesterday}`}>
             <a onClick={playMore} className={Styles.wantMore}>{"Want more? Play Yesterdays Stardle"}</a>
         </Link>
         <div className={Styles.timer}>

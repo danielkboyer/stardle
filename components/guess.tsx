@@ -1,20 +1,27 @@
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { CSSProperties, useState } from 'react'
 import styles from '../components/guess.module.css'
-import Select from "react-select";
+import Select, { StylesConfig } from "react-select";
+import { string } from 'prop-types';
 export default function Guess({
         guesses,
         guessFunction,
-        onNumber
+        onNumber,
+        options,
+        pushFunction,
+        skipFunction,
 }:{
       guesses:string[],
       guessFunction:(celebName:string)=>void,
-      onNumber:number
+      onNumber:number,
+      options: string[],
+      pushFunction:((password:string)=>void) | undefined,
+      skipFunction:((password:string)=>void) | undefined,
   
 }){
   
- 
+  const[password,setPassword] = useState("");
   const[menuOpen,setMenuOpen] = useState(false);
   const[selectedOption,setSelectedOption] = useState({value:"",label:""});
   // const onKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) =>{
@@ -75,24 +82,67 @@ export default function Guess({
     setSelectedOption({value:"",label:""});
 
   };
-
-  const onSelect = () =>{
+  type option_class = {
+    value:string;
+    label:string;
+  }
+  var options_c : option_class[] = [];
+  for(let x = 0;x<options.length;x++){
+    options_c.push({value:options[x],label:options[x]});
+  }
+  const customControlStyles: CSSProperties = {
+    color: "red",
+    borderColor: "pink",
+    width:"10rem"
 
   };
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ]
+  
+  const customSelectStyles : StylesConfig<option_class,false> = {
+    control:(provided,state) => {
+
+      return {
+        ...provided,
+        ...customControlStyles
+      }
+    }
+  }
+
+  const pushWrapper = () =>{
+    if(pushFunction == undefined)
+      return;
+    const input = document.getElementById("passwordInput") as HTMLInputElement;
+    pushFunction(input.value);
+  }
+  const skipWrapper = () =>{
+    if(skipFunction == undefined)
+      return;
+    const input = document.getElementById("passwordInput") as HTMLInputElement;
+    skipFunction(input.value);
+  }
   return (
     <div className={styles.main}>
-
+      <div className={styles.creation}>
+        {
+          <input id='passwordInput' ></input>
+        }
+        {
+          pushFunction !== undefined &&
+          <button onClick={()=>pushWrapper()}>PUSH</button>
+          
+        }
+        {
+          skipFunction !== undefined &&
+          <button onClick={()=>skipWrapper()}>SKIP</button>
+        }
+        </div>
+        <label className={styles.label}>Who&apos;s The Star?</label>
+        
         <div className={styles.input}>
-          <label>Who&apos;s The Star?</label>
+          
           
           <Select id="celebInput"  onChange={(e)=>{
             onSelectChange(e?.label);
-          }} className={styles.select}  options={options} onInputChange={onInputChange} menuIsOpen={menuOpen} placeholder="Type Celebrities Name Here" components={{
+          }} className={styles.select} styles={customSelectStyles}  options={options_c} onInputChange={onInputChange} menuIsOpen={menuOpen} placeholder="Type Here" components={{
             
             DropdownIndicator:()=>null,
             IndicatorSeparator:()=>null,
