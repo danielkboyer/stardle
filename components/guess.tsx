@@ -122,7 +122,7 @@ export default function Guess({
   return (
     <div className={styles.main}>
       <div className={styles.creation}>
-        {
+        { pushFunction !== undefined &&
           <input id='passwordInput' ></input>
         }
         {
