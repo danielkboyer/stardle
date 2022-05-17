@@ -31,19 +31,19 @@ export default function Images({
         }
         {
           guesses[2] == "" && guesses[1] != "" &&
-          <Image id='pixel3' src={pixels[2]} unoptimized  alt="Star 3" width={400} height={512} hidden={true}/>
+          <Image id='pixel3' src={pixels[2]} alt="Star 3" width={400} height={512} hidden={true}/>
         }
         {
           guesses[3] == "" && guesses[2] != "" &&
-          <Image id='pixel4' src={pixels[3]} unoptimized  alt="Star 4" width={400} height={512} hidden={true}/>
+          <Image id='pixel4' src={pixels[3]} alt="Star 4" width={400} height={512} hidden={true}/>
         }
         {
           guesses[4] == "" && guesses[3] != "" &&
-          <Image id='pixel5' src={pixels[4]} unoptimized  alt="Star 5" width={400} height={512} hidden={true}/>
+          <Image id='pixel5' src={pixels[4]} alt="Star 5" width={400} height={512} hidden={true}/>
         }
         {
           guesses[5] == "" && guesses[4] != "" &&
-          <Image id='pixel6' src={pixels[5]} unoptimized  alt="Star 6" width={400} height={512} hidden={true}/> 
+          <Image id='pixel6' src={pixels[5]} alt="Star 6" width={400} height={512} hidden={true}/> 
         }
         </div>
        
