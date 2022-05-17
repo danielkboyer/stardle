@@ -11,7 +11,7 @@ AWS.config.update(
     }
   );
 const s3 = new AWS.S3();
-export async function getNames(){
+export async function getNames():Promise<string>{
     const params = {Bucket:'stardlebucket',Key:'names.txt'};
     const response = await s3.getObject(params).promise();
     const fileContent = response.Body.toString('utf-8');

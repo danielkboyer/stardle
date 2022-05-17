@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getNames } from '../../../lib/creator';
 import { getDate } from '../../../lib/stars'
 const fs = require('fs');
 var AWS = require('aws-sdk')
@@ -20,13 +21,13 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
     if(req.method !== "POST"){
-      const message:any="Only POST requests are allowed"
-      res.status(405).send(message)
+      const message:any="Only POST requests are allowed";
+      res.status(405).send(message);
       return
 
     }
     if(req.body.password !== "Scorcher12!"){
-      const message:any="Incorrect password ya dumb fuck"
+      const message:any="Incorrect password ya dumb fuck";
       res.status(401).send(message);
       return;
     }
@@ -69,12 +70,77 @@ export default async function handler(
         console.log(`File uploaded successfully. ${data.Location}`);
     });
 
+    let names = (await getNames()).split("\n");
+    let nameString = "";
+    for(let x = 0;x<names.length;x++){
+      let newLine = '\n';
+      if(x === 0){
+        newLine = '';
+      }
+      if(names[x].substring(6) === req.body.name.toString()){
+          names[x] = '1'+names[x].substring(1);
+          nameString += newLine+names[x];
+      }
+      else{
+        nameString +=newLine+names[x];
+      }
+    }
+
+
+
+  // Setting up S3 upload parameters
+  const nameParams = {
+    Bucket: "stardlebucket",
+    Key: `names.txt`, // File name you want to save as in S3
+    Body: nameString
+  };
+    await s3.upload(nameParams, function(err: any, data: { Location: any; }) {
+      if (err) {
+          throw err;
+      }
+      console.log(`File uploaded successfully. ${data.Location}`);
+  })
+
 
 
       res.status(200).send(message);
     }
     else if(req.body.command === "SKIP"){
       const message:any="SKIPPED";
+
+      
+      let names = (await getNames()).split("\n");
+      console.log(req.body.name.toString());
+      let nameString = "";
+      for(let x = 0;x<names.length;x++){
+        let newLine = '\n';
+        if(x === 0){
+          newLine = '';
+        }
+        if(names[x].substring(6) === req.body.name.toString()){
+          
+          console.log(req.body.index.toString());
+          names[x] = `0 1 ${(parseInt(req.body.index.toString())+1).toString()} `+names[x].substring(6);
+
+        }
+
+        nameString +=newLine+names[x];
+        
+      }
+
+    // Setting up S3 upload parameters
+    const nameParams = {
+      Bucket: "stardlebucket",
+      Key: `names.txt`, // File name you want to save as in S3
+      Body: nameString
+    };
+      await s3.upload(nameParams, function(err: any, data: { Location: any; }) {
+        if (err) {
+            throw err;
+        }
+        console.log(`File uploaded successfully. ${data.Location}`);
+    })
+
       res.status(200).send(message);
     }
     const message:any="Invalid command";
