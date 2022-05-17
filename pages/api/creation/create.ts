@@ -5,8 +5,8 @@ const fs = require('fs');
 var AWS = require('aws-sdk')
 AWS.config.update(
     {
-      accessKeyId: "AKIASQVOOYCJV6J3QIYM",
-      secretAccessKey: "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",
+      accessKeyId: process.env.AWS_ID,
+      secretAccessKey: process.env.AWS_SECRET_KEY_PASS,
     }
   );
 const s3 = new AWS.S3();
