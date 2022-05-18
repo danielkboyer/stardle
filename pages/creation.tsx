@@ -166,8 +166,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       starIndex:string}
       console.log(postData);
     return {
-      props:  postData,
-      revalidate:60
+      props:  postData
       
     }
     

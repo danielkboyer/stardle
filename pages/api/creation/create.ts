@@ -104,6 +104,7 @@ export default async function handler(
 
 
       res.status(200).send(message);
+      return;
     }
     else if(req.body.command === "SKIP"){
       const message:any="SKIPPED";
@@ -142,6 +143,7 @@ export default async function handler(
     })
 
       res.status(200).send(message);
+      return;
     }
     const message:any="Invalid command";
       res.status(401).send(message);
