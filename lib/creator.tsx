@@ -73,7 +73,7 @@ export async function getStardleData() {
 
     const fileName = `${randomStar.name}/${randomStar.index}/star.jpg`;
     //five minute url, this is okay because only I will be using this.
-    const signedUrlExpireSeconds = 5* 60 *1;
+    const signedUrlExpireSeconds = 60* 60 *1;
     const starPath = await s3.getSignedUrl('getObject',{
       Bucket: "stardlebucket",
       Key:fileName,
@@ -82,7 +82,7 @@ export async function getStardleData() {
 
     for(let x = 1;x<7;x++){
       const fileName = `${randomStar.name}/${randomStar.index}/${x}.jpg`;
-      const signedUrlExpireSeconds = 60 *1;
+      const signedUrlExpireSeconds = 60* 60 *1;
       const url = await s3.getSignedUrl('getObject',{
         Bucket: "stardlebucket",
         Key:fileName,
