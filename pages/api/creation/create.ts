@@ -77,7 +77,7 @@ export default async function handler(
       if(x === 0){
         newLine = '';
       }
-      if(names[x].substring(6) === req.body.name.toString()){
+      if(names[x].substring(6).trim() === req.body.name.toString().trim()){
           names[x] = '1'+names[x].substring(1);
           nameString += newLine+names[x];
       }
@@ -118,7 +118,7 @@ export default async function handler(
         if(x === 0){
           newLine = '';
         }
-        if(names[x].substring(6) === req.body.name.toString()){
+        if(names[x].substring(6).trim() === req.body.name.toString().trim()){
           
           console.log(req.body.index.toString());
           names[x] = `0 1 ${(parseInt(req.body.index.toString())+1).toString()} `+names[x].substring(6);
