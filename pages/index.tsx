@@ -276,7 +276,7 @@ export default function Home({
         <Images guesses={guesses} pixels={pixels}/> 
        
 
-        <Guess options={names} skipFunction={undefined} pushFunction={undefined} guesses={guesses} guessFunction={onGuessSubmit} onNumber={7}/>
+        <Guess options={names} deleteFunction={undefined} skipFunction={undefined} pushFunction={undefined} guesses={guesses} guessFunction={onGuessSubmit} onNumber={7}/>
         
       </main>
 

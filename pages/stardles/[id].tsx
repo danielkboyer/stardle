@@ -165,7 +165,7 @@ export default function History({
         won={won}
         stardleNumber={stardleNumber.toString()}
         />}
-        <Guess options={names} pushFunction={undefined} skipFunction={undefined} guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
+        <Guess deleteFunction={undefined} options={names} pushFunction={undefined} skipFunction={undefined} guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
         
       </main>
 

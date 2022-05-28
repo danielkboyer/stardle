@@ -11,6 +11,7 @@ export default function Guess({
         options,
         pushFunction,
         skipFunction,
+        deleteFunction,
 }:{
       guesses:string[],
       guessFunction:(celebName:string)=>void,
@@ -18,6 +19,7 @@ export default function Guess({
       options: string[],
       pushFunction:((password:string)=>void) | undefined,
       skipFunction:((password:string)=>void) | undefined,
+      deleteFunction:((password:string)=>void) | undefined,
   
 }){
   
@@ -119,6 +121,13 @@ export default function Guess({
     const input = document.getElementById("passwordInput") as HTMLInputElement;
     skipFunction(input.value);
   }
+
+  const deleteWrapper = () =>{
+    if(deleteFunction == undefined)
+      return;
+    const input = document.getElementById("passwordInput") as HTMLInputElement;
+    deleteFunction(input.value);
+  }
   return (
     <div className={styles.main}>
       <div className={styles.creation}>
@@ -133,6 +142,10 @@ export default function Guess({
         {
           skipFunction !== undefined &&
           <button onClick={()=>skipWrapper()}>SKIP</button>
+        }
+        {
+          deleteFunction !== undefined &&
+          <button onClick={()=>deleteWrapper()}>DELETE</button>
         }
         </div>
         <label className={styles.label}>Who&apos;s The Star?</label>

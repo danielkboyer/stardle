@@ -99,6 +99,7 @@ export default function Creation({
 
   };
 
+  
   function push(password:string){
     fetch('/api/creation/create', {
       method: 'POST',
@@ -116,6 +117,16 @@ export default function Creation({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({name:starName,index:starIndex,command:"SKIP",password:password}),
+    })
+  }
+
+  function deleteStar(password:string){
+    fetch('/api/creation/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name:starName,index:starIndex,command:"DELETE",password:password}),
     })
   }
 
@@ -140,7 +151,7 @@ export default function Creation({
         {solved &&
         <h2 className={styles.title}>{starName}</h2>
         }
-        <Guess pushFunction={push} skipFunction={skip} options={names} guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
+        <Guess deleteFunction={deleteStar} pushFunction={push} skipFunction={skip} options={names} guesses={guesses} guessFunction={onGuessSubmit} onNumber={onNumber-1}/>
         
       </main>
 

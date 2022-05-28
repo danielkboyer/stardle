@@ -23,7 +23,7 @@ export async function getRandomStar():Promise<{index:string,name:string,names:st
   let names = (await getNames()).split('\n');
   let toChoose = [];
 
-  let maxCount = 10;
+  let maxCount = 30;
   for(let x = 0;x<names.length;x++){
     if(names[x][0] === '1'){
       continue;

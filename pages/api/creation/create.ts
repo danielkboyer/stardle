@@ -72,18 +72,18 @@ export default async function handler(
 
     let names = (await getNames()).split("\n");
     let nameString = "";
+    console.log(names);
+    console.log(req.body.name.toString().trim());
     for(let x = 0;x<names.length;x++){
       let newLine = '\n';
-      if(x === 0){
+      if(x === names.length-1){
         newLine = '';
       }
       if(names[x].substring(6).trim() === req.body.name.toString().trim()){
           names[x] = '1'+names[x].substring(1);
-          nameString += newLine+names[x];
       }
-      else{
-        nameString +=newLine+names[x];
-      }
+      nameString +=names[x]+newLine;
+      
     }
 
 
@@ -111,11 +111,12 @@ export default async function handler(
 
       
       let names = (await getNames()).split("\n");
-      console.log(req.body.name.toString());
+      console.log(`Names: ${names}`);
+      console.log(`request name: ${req.body.name.toString()}`);
       let nameString = "";
       for(let x = 0;x<names.length;x++){
         let newLine = '\n';
-        if(x === 0){
+        if(x === names.length-1){
           newLine = '';
         }
         if(names[x].substring(6).trim() === req.body.name.toString().trim()){
@@ -125,7 +126,46 @@ export default async function handler(
 
         }
 
-        nameString +=newLine+names[x];
+        nameString +=names[x]+newLine;
+        
+      }
+
+    // Setting up S3 upload parameters
+    const nameParams = {
+      Bucket: "stardlebucket",
+      Key: `names.txt`, // File name you want to save as in S3
+      Body: nameString
+    };
+      await s3.upload(nameParams, function(err: any, data: { Location: any; }) {
+        if (err) {
+            throw err;
+        }
+        console.log(`File uploaded successfully. ${data.Location}`);
+    })
+
+      res.status(200).send(message);
+      return;
+    }
+
+    else if (req.body.command === 'DELETE'){
+      const message:any = "Success in deleting";
+      let names = (await getNames()).split("\n");
+      console.log(`Names: ${names}`);
+      console.log(`request name: ${req.body.name.toString()}`);
+      let nameString = "";
+      for(let x = 0;x<names.length;x++){
+        let newLine = '\n';
+        if(x === names.length-1){
+          newLine = '';
+        }
+        if(names[x].substring(6).trim() === req.body.name.toString().trim()){
+          
+          console.log(req.body.index.toString());
+          names[x] = `1 1 ${(parseInt(req.body.index.toString())+1).toString()} `+names[x].substring(6);
+
+        }
+
+        nameString +=names[x]+newLine;
         
       }
 
