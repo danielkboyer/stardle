@@ -175,7 +175,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       starName:string,
       names:string[],
       starIndex:string}
-      console.log(postData);
     return {
       props:  postData
       

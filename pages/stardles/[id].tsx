@@ -41,6 +41,7 @@ export default function History({
   names ${starName}\n
   stardleNumber ${stardleNumber}`);
 
+  
   var prevNumber = stardleNumber-1
   var originalNumber = getNumber(getDate(0,false) as Date);
   console.log(originalNumber - stardleNumber);
@@ -50,6 +51,13 @@ export default function History({
   const[guesses, setGuesses] = useState(["","","","","",""]);
   const[onNumber,setOnNumber] = useState(7);
 
+  if(starPath === undefined){
+    return (
+      <div>
+        something went wrong
+      </div>
+    )
+  }
   const onGuessSubmit = (celebName:string) => {
     
     //if the problem is solved or they have guessed the last guess
@@ -175,7 +183,7 @@ export default function History({
 }
 export const getStaticPaths:GetStaticPaths = async ()=>{
   const paths = getAllStardleIds();
-  console.log("Static Paths: "+paths);
+  console.log("Static Paths: "+paths.map(t=>t.params.id));
   return {
     paths,
     fallback: true,
@@ -186,11 +194,11 @@ interface IParams extends ParsedUrlQuery{
 }
 export const getStaticProps: GetStaticProps = async (context) => {
   
-  console.log(context);
+  //console.log(context);
   const params = context.params as IParams;
-  console.log(params);
+ // console.log(params);
   const postData = await getStardleData(params.id,24*60);
-    console.log(postData);
+    //console.log(postData);
   return {
     props:  postData,
     revalidate: 60

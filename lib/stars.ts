@@ -77,6 +77,7 @@ export async function getName(date:string){
     return fileContent[0];
 }
 export async function getStardleData(date:string, minutes:number){
+    try{
     console.log("retrieving stardle data for date: "+date);
     const fileName = `images/${date}/star.jpg`;
     const starName = await getName(date);
@@ -102,6 +103,9 @@ export async function getStardleData(date:string, minutes:number){
 
     //get stardlenumber
     const stardleNumber = getNumber(new Date(Date.UTC(parseInt(date.substring(0,4)),parseInt(date.substring(4,6))-1,parseInt(date.substring(6,8)))));
+    if(stardleNumber === NaN || starPath === undefined || starName === undefined || pixels === undefined || pixels === null || starPath === null){
+        console.log(`ERROR: Something went wrong generating stardle data from date ${date}`);
+    }
 
     return {
         starName:starName,
@@ -110,6 +114,10 @@ export async function getStardleData(date:string, minutes:number){
         stardleNumber:stardleNumber,
         names:(await getNames()),
     };
+}catch(e){
+    throw (`ERROR: Something went wrong generating date: ${date} ${e} `);
+}
+    
 
 
 }
