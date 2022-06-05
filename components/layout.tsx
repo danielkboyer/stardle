@@ -11,6 +11,7 @@ import Modal from 'react-modal'
 import * as ga from '../lib/ga/index'
 import Help from '../pages/help'
 import { GetStaticProps } from 'next'
+import Script from 'next/script'
 //440 by 660
 Modal.setAppElement("#__next")
 export default function Layout({ children}:{
@@ -83,8 +84,8 @@ export default function Layout({ children}:{
         the best you can. Every incorrect answer reveals more pixels. Share your results with your friends and come back for tommorows stardle." />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
         <link rel="icon" href="/favicon.ico" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8577908781657467"
-     crossOrigin="anonymous"></script>
+        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8577908781657467"
+     crossOrigin="anonymous"></Script>
       </Head>
 
       <Modal

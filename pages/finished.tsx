@@ -91,7 +91,11 @@ function Finished({
 
     function newGameIdea(){
 
+        if(document === undefined)
+            return;
         var input = document.getElementById("ideaInput");
+        if(input === null)
+            return
         if(!(input instanceof HTMLInputElement)){
           throw new Error(`Expected element to be an HTMLScriptELement, was ${input && input.constructor && input.constructor.name || input}`);
           return;
