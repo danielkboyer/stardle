@@ -12,6 +12,8 @@ import {FacebookShareButton,FacebookIcon, RedditIcon, TwitterIcon} from 'next-sh
 import Link from 'next/link';
 import { getShareMessage } from '../lib/share';
 import { getDate, getNumber } from '../lib/stars';
+import {alertService} from '../services/alert.service';
+import { Alert } from '../components/Alert';
 function isBool(cookie: CookieValueTypes):cookie is boolean{
   return (cookie as boolean) !== undefined;
 }
@@ -86,6 +88,34 @@ function Finished({
             }
           })
     }
+
+    function newGameIdea(){
+
+        var input = document.getElementById("ideaInput");
+        if(!(input instanceof HTMLInputElement)){
+          throw new Error(`Expected element to be an HTMLScriptELement, was ${input && input.constructor && input.constructor.name || input}`);
+          return;
+        }
+  
+        
+        var idea = input.value;
+        if(idea === "" || idea === null)
+            return;
+        ga.event({
+            action: "game_idea",
+            params : {
+                idea:idea
+            }
+          });
+
+          input.value = "";
+
+          navigator.clipboard.writeText(idea).then(()=>{
+            alertService.success("Idea submitted, thanks!",{fade:3});
+          }).catch(()=>{
+            alertService.error("Something went wrong",{fade:3});
+          });
+    }
     const interval = setInterval(() => {
 
         var now = new Date();
@@ -113,34 +143,58 @@ function Finished({
   return (
     
     
-    <Layout>
-        <div className={Styles.container}>
-        <Image src={starPath} width={400} height={512}></Image>
-        <div className={Styles.name}>{starName}</div>
-        {won == true &&
-            <div className={Styles.desc}>You Won! You Smart!</div>
-        }
-        {won == false &&
-            <div className={Styles.desc}>You didn&apos;t get todays Stardle... Try again tommorow.</div>
-        }
-        
+      <Layout>
+          <div className={Styles.container}>
+              <Image src={starPath} width={400} height={512}></Image>
+              <div className={Styles.name}>{starName}</div>
+              {won == true &&
+                  <div className={Styles.desc}>You Won! You Smart!</div>
+              }
+              {won == false &&
+                  <div className={Styles.desc}>You didn&apos;t get todays Stardle... Try again tommorow.</div>
+              }
+              <div>
+                  <Link href={`/stardles/${yesterday}`}>
+                      <a onClick={playMore} className={Styles.wantMore}>{"Want more? Play Yesterdays Stardle"}</a>
+                  </Link>
+              </div>
+              <Share
+                  number={number}
+                  guesses={guesses}
+                  won={won}
+                  stardleNumber={stardleNumber}
+              />
+
+
+
+              {/* <div>
         <Link  href={`/stardles/${yesterday}`}>
-            <a onClick={playMore} className={Styles.wantMore}>{"Want more? Play Yesterdays Stardle"}</a>
+            <a onClick={playMore} className={Styles.newStardle}>
+                <div>
+                    Try <span>NEW</span> NBA Stardle
+                </div>
+            </a>
         </Link>
-        <div className={Styles.timer}>
-            <span>Next Stardle</span>
-            <div id='myTimer'>
-                12:00:00
-            </div>
-        </div>
-        <Share
-          number={number}
-          guesses={guesses}
-          won={won}
-          stardleNumber={stardleNumber}
-          />
-        </div>
-{/* 
+
+        </div> */}
+              <div className={Styles.input}>
+                  <div>
+                      Want different categories of stardle? Write a category below to be created (e.g NBA, Soccer, GEN Z, Political, UK).
+                  </div>
+                  <input id="ideaInput"></input>
+                  <button onClick={newGameIdea}>Submit</button>
+                  <Alert />
+              </div>
+              <div className={Styles.timer}>
+                  <span>Next Stardle</span>
+                  <div id='myTimer'>
+                      12:00:00
+                  </div>
+              </div>
+
+
+          </div>
+          {/* 
         <div className={Styles.followMe}>
             Follow me and share your results, or suggest ideas.
         </div>
@@ -161,7 +215,7 @@ function Finished({
                 <TwitterIcon size={32}/>
             </a>
         </div> */}
-    </Layout>
+      </Layout>
   )
 }
 

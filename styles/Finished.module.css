@@ -83,6 +83,37 @@ margin: .125rem;
     
 }
 
+.newStardle{
+    color:blue;
+    margin: 0;
+}
+.newStardle span{
+    background-image: linear-gradient(to left, violet, indigo, green, yellow, orange, red);   
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.input {
+    margin-top: .3rem;
+    margin-bottom: .3rem;
+    min-width: 250px;
+  }
+  .input button{
+    background-color: var(--stardle_blue);
+    color: white;
+    margin-left: .2rem;
+    border: none;
+    padding: .2rem;
+    border-radius: .1rem;
+    font-family: inherit;
+  }
+  .input input{
+    font-family: inherit;
+    padding: .2rem;
+    margin: .2rem;
+  }
 .wantMore{
     color: blue;
 }
