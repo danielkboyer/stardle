@@ -178,7 +178,7 @@ export const getStaticPaths:GetStaticPaths = async ()=>{
   console.log("Static Paths: "+paths);
   return {
     paths,
-    fallback: false
+    fallback: true,
   }
 }
 interface IParams extends ParsedUrlQuery{
